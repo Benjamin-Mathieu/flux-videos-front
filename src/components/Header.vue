@@ -1,0 +1,59 @@
+<template>
+    <header>
+            <img class="icons" src="../assets/icons/menu-white-36dp.svg" alt="menu">
+            <form action="" class="search">
+                <input type="text" placeholder="Rechercher">
+                <img class="icons" src="../assets/icons/search-black-36dp.svg" alt="search">
+            </form>
+            <button class="stream-buttons">URGENCE</button>
+            <button class="stream-buttons">Lancer Stream</button>
+            <img class="icons" src="../assets/icons/notifications_none-white-36dp.svg" alt="notifications">
+            <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil">
+    </header>
+</template>
+
+<style lang="scss">
+    header {
+        height: 80px;
+        background-color: #474747;
+        display: flex; justify-content: center; align-items: center;
+
+        .icons {
+            height: 30px; width: 30px;
+        }
+
+        .stream-buttons {
+            background-color: #FF2828;
+            color: whitesmoke;
+            padding: .7em;
+            border-radius: .3em;
+            border: none;
+            margin: 1em;
+        }
+
+        form.search {
+            position: relative;
+            margin-right: auto;
+            display: flex; align-items: center;
+
+            img {
+                transform: translateX(-30px);
+            }
+
+            input[type="text"] {
+                height: 100%;
+                width: 150px;
+                padding: 0.5em;
+                font-size: 1em;
+                border: 1px solid grey;
+                float: left;
+                background: #f1f1f1;
+                transition: width 0.7s ease-in-out;
+            }
+
+            input[type="text"]:focus {
+                width: 600px;
+            }
+        }
+    }
+</style>
