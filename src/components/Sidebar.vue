@@ -1,38 +1,62 @@
 <template>
-    <section class="sidebar">
-        <ul>
-            <li>
-                <a href=""><img class="icons" src="../assets/icons/menu-white-36dp.svg" alt="Acceuil">Acceuil</a>
-            </li>
-            <li>
-                <a href=""><img class="icons" src="../assets/icons/library_add-white-36dp.svg" alt="Bibliothéques">Bibliothéques</a>
-            </li>
-             <li>
-                <a href=""><img class="icons" src="../assets/icons/subscriptions-white-36dp.svg" alt="Abonnements">Abonnements</a>
-            </li>
-             <li>
-                <a href=""><img class="icons" src="../assets/icons/settings-white-36dp.svg" alt="Paramètres">Paramètres</a>
-            </li>
-        </ul>
-    </section>
+  <section class="sidebar" :class="{'sidebar-toggled':!isOpen}">
+    <img
+      class="icons"
+      src="../assets/icons/home-white-36dp.svg"
+      alt="Acceuil"
+    /><router-link to="/" class="link">Acceuil</router-link>
+    <img
+      class="icons"
+      src="../assets/icons/library_add-white-36dp.svg"
+      alt="Bibliothéques"
+    /><router-link to="/video">Bibliothéques</router-link>
+    <img
+      class="icons"
+      src="../assets/icons/subscriptions-white-36dp.svg"
+      alt="Abonnements"
+    /><router-link to="/subs">Abonnements</router-link>
+    <img
+      class="icons"
+      src="../assets/icons/settings-white-36dp.svg"
+      alt="Paramètres"
+    /><router-link to="/settings">Paramètres</router-link>
+  </section>
 </template>
 
-<style lang="scss">
-    .sidebar {
-        width: 20%;
-        background-color: #C4C4C4;
-        height: 100%;
-
-        img {
-            vertical-align: middle;
+<script>
+export default {
+    data() {
+        return {
+            isOpen: true
         }
+    },
 
-        ul {
-            li:last-child {
-                background-color: red;
-                margin-top: auto;
-            }
-        }
+    mounted() {
+        this.emitter.on("toggle-sidebar", isOpen => {
+            this.isOpen = isOpen
+        })
     }
+}
+</script>
 
+<style lang="scss">
+.sidebar {
+  width: 10%;
+  background-color: #c4c4c4;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  a {
+    color: whitesmoke;
+  }
+  .icons {
+    vertical-align: middle;
+    margin-top: 1em;
+  }
+}
+
+.sidebar-toggled{
+    display: none;
+}
 </style>

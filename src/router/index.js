@@ -6,6 +6,24 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/video",
+    name: "Bibliothèque",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Bibliotheque.vue")
+  },
+  {
+    path: "/subs",
+    name: "Abonnement",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Abonnement.vue")
+  },
+  {
+    path: "/settings",
+    name: "Parametre",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Parametre.vue")
   }
 ];
 
