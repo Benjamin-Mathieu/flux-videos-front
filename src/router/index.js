@@ -24,7 +24,13 @@ const routes = [
     name: "Parametre",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Parametre.vue")
-  }
+  },
+  {
+    path: "/stream",
+    name: "Stream",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Stream.vue")
+  },
 ];
 
 const router = createRouter({

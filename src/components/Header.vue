@@ -12,7 +12,7 @@
       />
     </form>
     <button class="stream-buttons">URGENCE</button>
-    <button class="stream-buttons">Lancer Stream</button>
+    <button class="stream-buttons"><router-link to="/stream">Lancer Stream</router-link></button>
     <img
       class="icons"
       src="../assets/icons/notifications_none-white-36dp.svg"

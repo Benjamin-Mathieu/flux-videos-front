@@ -1,20 +1,19 @@
 <template>
   <Header />
-  <Sidebar/>
-  <Stream />
+  <div class="main">
+    <Sidebar/>
+  </div>
   <router-view />
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
 import Sidebar from "@/components/Sidebar.vue";
-import Stream from "@/components/Stream.vue";
 
 export default {
   components: {
     Header,
     Sidebar,
-    Stream
   }
 };
 </script>
@@ -35,6 +34,10 @@ export default {
   a {
     font-weight: bold;
     text-decoration: none;
+  }
+
+  .main {
+    display: flex;
   }
 }
 </style>
