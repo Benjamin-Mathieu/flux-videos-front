@@ -4,7 +4,7 @@
       class="icons"
       src="../assets/icons/home-white-36dp.svg"
       alt="Acceuil"
-    /><router-link to="/" class="link">Acceuil</router-link>
+    /><router-link to="/" class="link">Accueil</router-link>
     <img
       class="icons"
       src="../assets/icons/library_add-white-36dp.svg"

@@ -68,7 +68,7 @@ export default {
     if (hasGetUserMedia()) {
       const constraints = {
         audio: true,
-        video: true
+        //video: true
       };
         
     navigator.mediaDevices.getUserMedia(constraints).
