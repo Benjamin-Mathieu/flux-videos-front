@@ -5,8 +5,6 @@ const http = require("http");
 const express = require("express");
 const app = express();
 app.use(cors());
-
-let broadcaster;
 const port = 4000 || process.env.port; // Port du serveur 4000 ou un autre port disponible si celui-ci est déjà occupé
 const server = http.createServer(app); // Crée le serveur http pour l'utilisé avec socket.io
 
@@ -23,13 +21,14 @@ app.get('/', function (req, res) {
     res.status(200).json({"message":"ok"})
 })
  
+let broadcaster;
 
 io.sockets.on("error", event => console.log(event));
 
 io.sockets.on("connection", socket => {
     console.log("connected")
     socket.on("broadcaster", () => {
-        broadcaster = socket.id;
+        broadcaster = socket.id; //Le socket ID du diffuseur est enregistré pour connaître où les clients doivent se connecter sur le stream
         socket.broadcast.emit("broadcaster");
     });
     socket.on("watcher", () => {

@@ -1,7 +1,6 @@
 <template>
     <div>
         <h1>Watch stream</h1>
-        <button @click="watchStream">Regarder</button>
         <video playsinline controls autoplay ref="watcher"></video>
     </div>
 </template>
@@ -21,9 +20,8 @@ const socket = io.connect("http://localhost:4000");
 console.log(socket)
 
 export default {
-    methods: {
-        watchStream() {
-            socket.on("offer", (id, description) => {
+    mounted() {
+        socket.on("offer", (id, description) => {
             peerConnection = new RTCPeerConnection(config);
             peerConnection
             .setRemoteDescription(description)
@@ -61,7 +59,6 @@ export default {
             socket.close();
             peerConnection.close();
             };
-        }
-    }//methods
+    }
 }
 </script>

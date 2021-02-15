@@ -28,8 +28,8 @@ export default {
       });
 
       socket.on("watcher", id => {
-      const peerConnection = new RTCPeerConnection(config);
-      peerConnections[id] = peerConnection;
+      const peerConnection = new RTCPeerConnection(config); // Création d'une connexion peer to peer à chaque fois qu'un nouveau client rejoins le stream
+      peerConnections[id] = peerConnection; // 
       let stream = this.$refs.video.srcObject;
       stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
       peerConnection.onicecandidate = event => {
@@ -59,13 +59,12 @@ export default {
       socket.close();
     };
     
+
+// ACCES A LA CAM ET MICRO
     function hasGetUserMedia() {
       return !!(navigator.mediaDevices &&
       navigator.mediaDevices.getUserMedia);
     };
-
-
-// ACCES A LA CAM ET MICRO
     if (hasGetUserMedia()) {
       const constraints = {
         audio: true,
