@@ -12,7 +12,12 @@
       />
     </form>
     <button class="stream-buttons">URGENCE</button>
-    <button class="stream-buttons"><router-link to="/stream">Lancer Stream</router-link></button>
+    <button class="stream-buttons">
+      <router-link to="/stream">Lancer Stream</router-link>
+    </button>
+    <button class="stream-buttons">
+      <router-link to="/watch">Regarder Stream</router-link>
+    </button>
     <img
       class="icons"
       src="../assets/icons/notifications_none-white-36dp.svg"
@@ -28,18 +33,18 @@
 
 <script>
 export default {
-    data() {
-        return {
-            sidebarOpen: true
-        }
-    },
+  data() {
+    return {
+      sidebarOpen: true
+    };
+  },
 
-    methods: {
-        toggleSidebar() {
-            this.sidebarOpen = !this.sidebarOpen
-            this.emitter.emit("toggle-sidebar", this.sidebarOpen)
-        }
+  methods: {
+    toggleSidebar() {
+      this.sidebarOpen = !this.sidebarOpen;
+      this.emitter.emit("toggle-sidebar", this.sidebarOpen);
     }
+  }
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="sidebar" :class="{'sidebar-toggled':!isOpen}">
+  <section class="sidebar" :class="{ 'sidebar-toggled': !isOpen }">
     <img
       class="icons"
       src="../assets/icons/home-white-36dp.svg"
@@ -25,18 +25,18 @@
 
 <script>
 export default {
-    data() {
-        return {
-            isOpen: true
-        }
-    },
+  data() {
+    return {
+      isOpen: true
+    };
+  },
 
-    mounted() {
-        this.emitter.on("toggle-sidebar", isOpen => {
-            this.isOpen = isOpen
-        })
-    }
-}
+  mounted() {
+    this.emitter.on("toggle-sidebar", isOpen => {
+      this.isOpen = isOpen;
+    });
+  }
+};
 </script>
 
 <style lang="scss">
@@ -56,7 +56,7 @@ export default {
   }
 }
 
-.sidebar-toggled{
-    display: none;
+.sidebar-toggled {
+  display: none;
 }
 </style>
