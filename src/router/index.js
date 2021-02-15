@@ -36,6 +36,12 @@ const routes = [
     name: "Watch",
     component: () =>
       import("../views/Watch.vue")
+  },
+  {
+    path: "/user",
+    name: "Inscription",
+    component: () =>
+      import("../views/Inscription.vue")
   }
 ];
 
