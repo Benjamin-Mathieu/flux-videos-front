@@ -29,15 +29,17 @@ export default {
 
       socket.on("watcher", id => {
       const peerConnection = new RTCPeerConnection(config); // Création d'une connexion peer to peer à chaque fois qu'un nouveau client rejoins le stream
-      peerConnections[id] = peerConnection; // 
+      peerConnections[id] = peerConnection;
       let stream = this.$refs.video.srcObject;
-      stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
+      stream.getTracks().forEach(track => peerConnection.addTrack(track, stream)); // Ajout du stream local à la connexion en utilisant la méthode addTrack() en lui passant en paramètre le stream et les données track
+      // L'event peerConnection.onicecandidate est apellé quand nous recevons un ICE candidate et il l'envoi au serveur express
       peerConnection.onicecandidate = event => {
         if(event.candidate) {
           socket.emit("candidate", id, event.candidate);
         }
       };
 
+    // Envoi d'une offre de connexion au client avec peerConnection.createOffer() et appel de peerConnection.setLocalDescription() pour configurer la connexion
     peerConnection
         .createOffer()
         .then(sdp => peerConnection.setLocalDescription(sdp))
@@ -50,11 +52,13 @@ export default {
       peerConnections[id].addIceCandidate(new RTCIceCandidate(candidate));
     });
 
+    // Ferme la connexion du pair lorsqu'un client se déconnecte
     socket.on("disconnectPeer", id => {
       peerConnections[id].close();
       delete peerConnections[id];
     });
 
+    // Stop la connexion du socket quand le client ferme la fenêtre du navigateur
     window.onunload = window.onbeforunload = () => {
       socket.close();
     };
