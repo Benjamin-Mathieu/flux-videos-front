@@ -1,30 +1,43 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <Header />
+  <div class="main">
+    <Sidebar />
   </div>
   <router-view />
 </template>
 
+<script>
+import Header from "@/components/Header.vue";
+import Sidebar from "@/components/Sidebar.vue";
+
+export default {
+  components: {
+    Header,
+    Sidebar
+  }
+};
+</script>
+
 <style lang="scss">
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
+  height: 100vh;
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    text-decoration: none;
+  }
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+  .main {
+    display: flex;
   }
 }
 </style>
