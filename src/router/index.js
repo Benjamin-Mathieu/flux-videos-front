@@ -32,10 +32,10 @@ const routes = [
       import("../views/Stream.vue")
   },
   {
-    path: "/watch",
-    name: "Watch",
+    path: "/stream/:id",
+    name: "ViewStream",
     component: () =>
-      import("../views/Watch.vue")
+      import("../views/WatchStream.vue")
   },
   {
     path: "/user",
