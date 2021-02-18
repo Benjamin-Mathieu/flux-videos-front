@@ -33,9 +33,9 @@ const routes = [
   },
   {
     path: "/stream/:id",
-    name: "Watch",
+    name: "ViewStream",
     component: () =>
-      import("../views/UnStream.vue")
+      import("../views/WatchStream.vue")
   },
   {
     path: "/user",

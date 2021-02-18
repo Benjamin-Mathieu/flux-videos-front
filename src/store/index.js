@@ -1,14 +1,22 @@
-import { createStore } from "vuex";
+import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    uuidStream: ""
+    streams: [],
+    videos: []
   },
   mutations: {
-    setUuidStream(state, uuid) {
-      state.uuidStream = uuid
+    setStreams(state,streams)
+    {
+      state.streams= streams;
+    },
+    setVideos(state,videos)
+    {
+      state.videos= videos;
     }
   },
-  actions: {},
-  modules: {}
-});
+  actions: {
+  },
+  modules: {
+  }
+})
