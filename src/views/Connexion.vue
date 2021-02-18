@@ -37,7 +37,7 @@ export default {
         connexionCompte()
         {
             api.post('user/signin',{
-                login: this.username,
+                username: this.username,
                 password : this.password
             }).then(response => {
                 this.$store.commit('setUser',response.data.username);
