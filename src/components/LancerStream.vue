@@ -1,10 +1,28 @@
 <template>
-  <div>
-    <h2>Lancer webcam/audio</h2>
-    <button @click="startStream" id="start">START</button>
-    <video playsinline controls autoplay ref="video"></video>
+  <form @submit.prevent="startStream">
+    <label for="stream-name">Titre du stream: </label>
+    <input v-model="title" type="text" id="stream-name">
 
-  </div>
+    <div>
+      <p>Mode de diffusion: </p>
+      <label for="public">Publique </label>
+      <input type="radio" id="public" name="visibility">
+      <label for="private">Privé </label>
+      <input type="radio" id="private" name="visibility">
+    </div>
+    
+    <div>
+      <label for="anonymous">Anonyme</label>
+      <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
+    </div>
+
+    <div>
+      <label for="urgency">Mode urgence</label>
+      <input v-model="checkbox_urgency" type="checkbox" id="urgency">
+    </div>
+    <button>START</button>
+  </form>
+      <video playsinline controls autoplay ref="video"></video>
 </template>
 
 <script>
@@ -21,6 +39,16 @@
   const socket = io.connect("http://localhost:4000");
 
 export default {
+  data() {
+    return {
+      title : "",
+      checkbox_public: false,
+      checkbox_private: false,
+      checkbox_anonymous: false,
+      checkbox_urgency: false
+    }
+  },
+
   methods: {
     startStream() {
       socket.on("answer", (id, description) => {
@@ -72,7 +100,7 @@ export default {
     if (hasGetUserMedia()) {
       const constraints = {
         audio: true,
-        //video: true
+        video: true
       };
         
     navigator.mediaDevices.getUserMedia(constraints).
@@ -88,5 +116,13 @@ export default {
 
   } //methods
 }
- 
 </script>
+
+<style lang="scss" scoped>
+  form {
+    width: 50%;
+    margin: auto;
+    padding: 1em;
+    border: 1px solid #CCC;
+  }
+</style>

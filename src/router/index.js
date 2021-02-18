@@ -29,13 +29,13 @@ const routes = [
     path: "/stream",
     name: "Stream",
     component: () =>
-      import("../views/Stream.vue")
+      import("../components/LancerStream.vue")
   },
   {
-    path: "/watch",
+    path: "/stream/:id",
     name: "Watch",
     component: () =>
-      import("../views/Watch.vue")
+      import("../views/UnStream.vue")
   },
   {
     path: "/user",

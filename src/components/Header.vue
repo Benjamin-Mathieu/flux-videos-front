@@ -15,9 +15,9 @@
     <button class="stream-buttons">
       <router-link to="/stream">Lancer Stream</router-link>
     </button>
-    <button class="stream-buttons">
+    <!-- <button class="stream-buttons">
       <router-link to="/watch">Regarder Stream</router-link>
-    </button>
+    </button> -->
     <img
       class="icons"
       src="../assets/icons/notifications_none-white-36dp.svg"
