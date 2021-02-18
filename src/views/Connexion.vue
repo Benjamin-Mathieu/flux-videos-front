@@ -8,13 +8,13 @@
         </div>
         <div>
             <label>Mot de passe</label>
-            <input v-model="password" required type="text" placeholder="Saisir votre mot de passe">
+            <input v-model="password" required type="password" placeholder="Saisir votre mot de passe">
         </div>
         <div>
             <button class="button">Connexion</button>
         </div>
         <div>
-            Mot de passe oublié ?
+            <a href="">Mot de passe oublié ?</a>
         </div>
         <div>
             <button class="button">Inscription</button>
@@ -36,7 +36,7 @@ export default {
     {
         connexionCompte()
         {
-            api.post('user/signin',{
+            api.post('signin',{
                 username: this.username,
                 password : this.password
             }).then(response => {
