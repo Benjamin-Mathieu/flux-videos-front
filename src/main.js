@@ -9,7 +9,7 @@ import axios from 'axios'
 const emitter = mitt();
 let app = createApp(App);
 window.api = axios.create({
-    baseURL: 'http://192.168.0.11:8081/api/',
+    baseURL: 'http://localhost:8081/api/',
     withCredentials: false
     /*headers: {
         'crossorigin': 'true',
