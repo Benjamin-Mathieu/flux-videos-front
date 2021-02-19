@@ -40,8 +40,8 @@ export default {
                 username: this.username,
                 password : this.password
             }).then(response => {
-                this.$store.commit('setUser',response.data.username);
-                this.$store.commit('settoken',response.data.token);
+                //this.$store.commit('setUser',response.data.username);
+                //this.$store.commit('settoken',response.data.token);
 
                 this.$router.push('/se-connecter');
             }).catch(error => {
