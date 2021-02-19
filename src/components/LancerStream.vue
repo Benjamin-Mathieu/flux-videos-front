@@ -33,6 +33,10 @@
 </template>
 
 <script>
+var connection = new RTCMultiConnection();
+
+                // this line is VERY_important
+                connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 export default {
     data()
@@ -65,10 +69,6 @@ export default {
             }).then(response =>
             {
                 this.formulaire = false
-                var connection = new RTCMultiConnection();
-
-                // this line is VERY_important
-                connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
                 connection.session = {
                     screen: true,
@@ -90,10 +90,9 @@ export default {
         },
         stopStream()
         {
-            //windows en cas de ragequit
-            api.delete('stream').then(response=>
+            // windows en cas de ragequit
+            api.delete('stream/' + connection.sessionid).then(response=>
             {
-                
                 connection.closeSocket();
             }).catch(error=>{
                 alert(error.response.data.message)
@@ -103,7 +102,7 @@ export default {
         {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             console.log('getUserMedia supported.');
-            navigator.mediaDevices.getUserMedia({audio:true, video: true})
+            navigator.mediaDevices.getUserMedia({audio:true, screen: true, oneway: true})
 
              // Success callback
             .then(stream => {

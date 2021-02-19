@@ -10,10 +10,28 @@
 import Header from "@/components/Header.vue";
 import Sidebar from "@/components/Sidebar.vue";
 
+
 export default {
   components: {
     Header,
     Sidebar
+  },
+
+  mounted() {
+    this.chargerStreams();
+    this.emitter.on("charger-streams", this.chargerStreams)
+  },
+
+  methods: {
+    chargerStreams() {
+      api.get("home").then(response => {
+        this.$store.commit("setStreams", response.data.streams);
+        console.log(response.data.streams)
+        console.log(this.$store.state.streams)
+      }).catch(error => {
+        console.log(error.response.data.message)
+      })
+    }
   }
 };
 </script>
