@@ -33,6 +33,10 @@
 </template>
 
 <script>
+var connection = new RTCMultiConnection();
+
+                // this line is VERY_important
+                connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 export default {
     data()
@@ -65,10 +69,6 @@ export default {
             }).then(response =>
             {
                 this.formulaire = false
-                var connection = new RTCMultiConnection();
-
-                // this line is VERY_important
-                connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
                 connection.session = {
                     audio: true,
@@ -116,8 +116,8 @@ export default {
         },
         stopStream()
         {
-            //windows en cas de ragequit
-            api.delete('stream').then(response=>
+            // windows en cas de ragequit
+            api.delete('stream/' + connection.sessionid).then(response=>
             {
                 connection.closeSocket();
             }).catch(error=>{
