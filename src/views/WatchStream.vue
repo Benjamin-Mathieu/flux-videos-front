@@ -83,7 +83,6 @@ export default {
 <style lang="scss">
 
     .watch-stream {
-        background-color: red;
         .stream {
             width: 80%;
             margin: auto;
