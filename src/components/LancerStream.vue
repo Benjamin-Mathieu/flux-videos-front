@@ -88,45 +88,42 @@ export default {
             {
                 alert(error.response.data.message)
             })
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                console.log('getUserMedia supported.');
+                navigator.mediaDevices.getUserMedia({audio:true, video: true})
+
+                // Success callback
+                .then(stream => {
+                    this.stream = stream;
+                    
+                    const mediaStream = new MediaStream(stream);
+                    const video = document.querySelector('video');
+                    video.srcObject = mediaStream;
+
+                    const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
+                    this.recorder = mediaRecorder;
+                    
+                    mediaRecorder.ondataavailable = e => {
+                        this.recordedChunks.push(e.data);
+                    }
+                    mediaRecorder.start(100);
+                    console.log(mediaRecorder.state);
+                    console.log("recorder started");
+                })
+                .catch(e => { console.error('getUserMedia() failed: ' + e); });
+            }
         },
         stopStream()
         {
             //windows en cas de ragequit
             api.delete('stream').then(response=>
             {
-                
                 connection.closeSocket();
             }).catch(error=>{
                 alert(error.response.data.message)
             })
         },
-        recordStream()
-        {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            console.log('getUserMedia supported.');
-            navigator.mediaDevices.getUserMedia({audio:true, video: true})
-
-             // Success callback
-            .then(stream => {
-                this.stream = stream;
-                
-                const mediaStream = new MediaStream(stream);
-                const video = document.querySelector('video');
-                video.srcObject = mediaStream;
-
-                const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
-                this.recorder = mediaRecorder;
-                
-                mediaRecorder.ondataavailable = e => {
-                    this.recordedChunks.push(e.data);
-                }
-                mediaRecorder.start(100);
-                console.log(mediaRecorder.state);
-                console.log("recorder started");
-            })
-            .catch(e => { console.error('getUserMedia() failed: ' + e); });
-            }
-        },//recordStream
         downloadStream()
         {
             this.recorder.stop();
