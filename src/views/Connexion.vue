@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Connexion à son compte</h1>
-        <form @submit.prevent="connexion">
+        <form @submit.prevent="connexionCompte">
         <div>
             <label>Login</label>
             <input v-model="username" required type="text" placeholder="Saisir votre Login">
