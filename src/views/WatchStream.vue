@@ -30,7 +30,8 @@ export default {
             // this line is VERY_important
             connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
             connection.session = {
-                screen: true,
+                audio: true,
+                video: true,
                 oneway: true
             };
             connection.socketMessageEvent = 'screen-sharing';
@@ -57,7 +58,7 @@ export default {
             .then(response => {
                 let latitude = response.data.latitude;
                 let longitude = response.data.longitude;
-
+                console.log(latitude, longitude);
                 let map = L.map("map").setView([latitude, longitude], 15);
             
                 let openStreetMapLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {

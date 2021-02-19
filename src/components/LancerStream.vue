@@ -71,7 +71,8 @@ export default {
                 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
                 connection.session = {
-                    screen: true,
+                    audio: true,
+                    video: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -130,13 +131,13 @@ export default {
         {
             this.recorder.stop();
             this.stream.getTracks().forEach(track => { track.stop(); });
-            let blob = new Blob(this.recordedChunks, {type: "video/webm"});
+            let blob = new Blob(this.recordedChunks, {type: "video/mpeg"});
             let url =  URL.createObjectURL(blob);
             let a = document.createElement("a");
             document.body.appendChild(a);
             a.style = "display: none";
             a.href = url;
-            a.download = this.clipName + '.webm';
+            a.download = this.clipName + '.mpeg';
             a.click();
             setTimeout(function() { URL.revokeObjectURL(url); }, 100);
         }
