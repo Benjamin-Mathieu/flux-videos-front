@@ -1,8 +1,6 @@
 <template>
   <Header />
-  <div class="main">
-    <Sidebar />
-  </div>
+  <Sidebar />
   <router-view />
 </template>
 
@@ -54,8 +52,6 @@ export default {
     text-decoration: none;
   }
 
-  .main {
-    display: flex;
-  }
+
 }
 </style>

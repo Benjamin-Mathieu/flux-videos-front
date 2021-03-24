@@ -34,9 +34,8 @@
 
 <script>
 var connection = new RTCMultiConnection();
-
-                // this line is VERY_important
-                connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+connection.autoCloseEntireSession = true;
 
 export default {
     data()
@@ -94,6 +93,8 @@ export default {
             api.delete('stream/' + connection.sessionid).then(response=>
             {
                 connection.closeSocket();
+                this.emitter.emit("charger-streams");
+                
             }).catch(error=>{
                 alert(error.response.data.message)
             })

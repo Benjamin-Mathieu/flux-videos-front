@@ -1,6 +1,19 @@
 <template>
     <div class="watch-stream">
         <div class="stream"></div>
+        <div class="streamer">
+            <div class="info-streamer">
+                <img src="../assets/icons/add_a_photo-24px.svg" alt="avatar-streamer" class="avatar-streamer">
+                <div>
+                    <h3>Pseudo du streamer</h3>
+                    <button @click="subscribeStreamer"><img src="../assets/icons/heart.svg" alt="like-button"></button>
+                    <p>Description....</p>
+                </div> 
+            </div>
+            <div class="social-icons">
+                <a href="" target="_blank"><img src="../assets/icons/facebook.svg" alt="fb-icon"></a>
+            </div>
+        </div>
         <div id="map"></div>
     </div>
 </template>
@@ -66,16 +79,19 @@ export default {
                     });
 
                 let marker = L.marker([latitude, longitude]).addTo(map);
-                marker.bindPopup("<b>Vous êtes ici !</b>").openPopup();
+                marker.bindPopup("<b>Lieu du stream</b>").openPopup();
                 map.addLayer(openStreetMapLayer);
 
             }).catch(error=>
             {
                 console.log("error")
             })
+        } 
+    },
+    methods: {
+        subscribeStreamer() {
+            alert('Like');
         }
-
-        
     }
 }
 </script>
@@ -86,9 +102,33 @@ export default {
         .stream {
             width: 80%;
             margin: auto;
+            video {
+                width: 100%;
+            }
         }
+
+        .streamer {
+            width: 80%;
+            .avatar-streamer {
+                width: 80px; height: 80px;
+            }
+            div {
+                margin: .7em;
+            }
+            .info-streamer {
+                display: flex;
+            }
+            button {
+                background-color: transparent;
+                border: none;
+            }
+            display: flex; justify-content: space-between;
+            margin: auto;
+        }
+
         #map {
-            height: 400px; width: 400px;
+            width: 800px; height: 400px;
+            margin: auto;
         }
 
     }
