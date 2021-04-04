@@ -8,7 +8,7 @@ import axios from 'axios';
 const emitter = mitt();
 let app = createApp(App);
 window.api = axios.create({
-    baseURL: "http://localhost:8081/api/",
+    baseURL: "http://ca883344e012.ngrok.io/api",
     withCredentials: false
 });
 app.config.globalProperties.emitter = emitter;

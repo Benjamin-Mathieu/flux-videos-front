@@ -1,5 +1,5 @@
 <template>
-  <section class="sidebar" :class="{ 'sidebar-toggled': !isOpen }">
+  <section class="sidebar" :class="{ 'sidebar-toggled-of': !isOpen,  'sidebar-toggled-on': isOpen}">
     <img
       class="icons"
       src="../assets/icons/home-white-36dp.svg"
@@ -40,12 +40,17 @@ export default {
 </script>
 
 <style lang="scss">
-.sidebar {
+.main{
   width: 10%;
-  background-color: #c4c4c4;
+  float: left;
+}
+.sidebar {
+  width: 100%;
+  background-color: #474747;
   display: flex;
   align-items: center;
   flex-direction: column;
+  transition: height 0.15, ease-out;
 
   a {
     color: whitesmoke;
@@ -56,7 +61,13 @@ export default {
   }
 }
 
-.sidebar-toggled {
-  display: none;
+.sidebar-toggled-of {
+  height : 0px;
+  transition: height 0.25s ease-in;
+}
+
+.sidebar-toggled-on {
+  height : 300px;
+  transition: height 0.25s ease-in;
 }
 </style>
