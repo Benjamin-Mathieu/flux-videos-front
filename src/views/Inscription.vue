@@ -1,35 +1,34 @@
 <template>
     <div>
-        <h1>Créer un compte</h1>
-        <form @submit.prevent="creerCompte">
-        <div>
-            <label>Nom</label>
-            <input v-model="name" required type="text" placeholder="Nom">
+        <div class="content">
+
+            <h1>Inscription</h1>
+            <form @submit.prevent="creerCompte">
+            <div>
+                <input v-model="name" required type="text" placeholder="Nom">
+            </div>
+            <div>
+                <input v-model="firstname" required type="text" placeholder="Prénom">
+            </div>
+            <div>
+                <input v-model="username" required type="text" placeholder="Pseudo">
+            </div>
+            <div>
+                <input v-model="mail" required type="email" placeholder="Mail">
+            </div>
+            <div>
+                <input v-model="password" required type="password" placeholder="Mot de passe">
+            </div>
+            <div>
+                <input v-model="confirmPassword" required type="password" placeholder="Confirmer le mot de passe">
+            </div>
+            <div>
+                <button class="button">Créer mon compte</button>
+            </div>
+            </form>
+
         </div>
-        <div>
-            <label>Prénom</label>
-            <input v-model="firstname" required type="text" placeholder="Prénom">
-        </div>
-        <div>
-            <label>Pseudo</label>
-            <input v-model="username" required type="text" placeholder="Pseudo">
-        </div>
-        <div>
-            <label>Mail</label>
-            <input v-model="mail" required type="email" placeholder="Mail">
-        </div>
-        <div>
-            <label>Mot de passe</label>
-            <input v-model="password" required type="password" placeholder="Mot de passe">
-        </div>
-        <div>
-            <label>Confirmer mot de passe</label>
-            <input v-model="confirmPassword" required type="password" placeholder="Confirmer le mot de passe">
-        </div>
-        <div>
-            <button class="button">Créer mon compte</button>
-        </div>
-        </form>
+
     </div>
 </template>
 
@@ -38,11 +37,12 @@ export default {
     data()
     {
         return{
-            name:'dzazad',
-            firstname:'dazadzadz',
-            username:'dazadzadz',
-            mail:'dazadz@mdr.fr',
-            password:'mdr',
+            name:'',
+            firstname:'',
+            username:'',
+            mail:'',
+            password:'',
+            confirmPassword: ''
         }
     },
     methods:
@@ -62,7 +62,7 @@ export default {
                 {
                     alert('Votre compte a été crée vous pouvez vous connecter');
                     console.log(response.data); //contenu des data
-                    //this.$router.push('/se-connecter');
+                    this.$router.push('/connexion');
                 }).catch(error=>
                 {
                     alert(error.response.data.message); //Contenu de de l'erreur
@@ -76,3 +76,35 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+
+div.content{
+    border: 1px solid black;
+    width: 30%;
+    margin: auto;
+    margin-top: 80px;
+    box-shadow: 0px 0px 50px 0px;
+    
+
+    h1{
+        text-align: center;
+    }
+    input{
+        width: 80%;
+        height: 40px;
+        margin-top: 30px;
+        margin-left: 10%
+    }
+    button{
+        width: 40%;
+        height: 50px;
+        color: white;
+        background-color: rgb(110, 101, 230);
+        margin-top: 30px;
+        margin-left: 30%;
+        margin-bottom: 30px;
+    }
+}
+    
+</style>

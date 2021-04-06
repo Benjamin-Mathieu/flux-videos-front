@@ -23,11 +23,10 @@
       src="../assets/icons/notifications_none-white-36dp.svg"
       alt="notifications"
     />
-    <img
-      class="icons"
-      src="../assets/icons/account_circle-white-36dp.svg"
-      alt="profil"
-    />
+    <button  @click="toggleSidebarProfil">
+      <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil"/>
+    </button>
+    
   </header>
 </template>
 
@@ -35,7 +34,8 @@
 export default {
   data() {
     return {
-      sidebarOpen: true
+      sidebarOpen: true,
+      sidebarProfil: true
     };
   },
 
@@ -43,6 +43,11 @@ export default {
     toggleSidebar() {
       this.sidebarOpen = !this.sidebarOpen;
       this.emitter.emit("toggle-sidebar", this.sidebarOpen);
+    },
+
+    toggleSidebarProfil() {
+      this.sidebarProfil = !this.sidebarProfil;
+      this.emitter.emit("toggle-sidebarProfil", this.sidebarProfil);
     }
   }
 };
@@ -52,10 +57,8 @@ export default {
 header {
   height: 80px;
   background-color: #474747;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  display: flex; justify-content: center; align-items: center;
+  margin-bottom: 3em;
   .icons {
     height: 30px;
     width: 30px;

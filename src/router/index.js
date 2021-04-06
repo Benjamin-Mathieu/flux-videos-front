@@ -29,7 +29,7 @@ const routes = [
     path: "/stream",
     name: "Stream",
     component: () =>
-      import("../views/Stream.vue")
+    import("../views/LancerStream.vue")
   },
   {
     path: "/stream/:id",
@@ -38,16 +38,16 @@ const routes = [
       import("../views/WatchStream.vue")
   },
   {
-    path: "/user",
+    path: "/inscription",
     name: "Inscription",
     component: () =>
       import("../views/Inscription.vue")
   },
   {
-    path: "/se-connecter",
+    path: "/connexion",
     name: "connexion",
     component: () =>
-    import("../views/Connexion.vue")
+      import("../views/Connexion.vue")
   }
 ];
 
