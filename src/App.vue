@@ -60,7 +60,6 @@ export default {
     font-weight: bold;
     text-decoration: none;
   }
-
-
+  
 }
 </style>

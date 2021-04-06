@@ -64,6 +64,12 @@ export default {
 .sidebar-toggled-of {
   height : 0px;
   transition: height 0.25s ease-in;
+  a{
+    display: none;
+  }
+  .icons{
+    display: none;
+  }
 }
 
 .sidebar-toggled-on {

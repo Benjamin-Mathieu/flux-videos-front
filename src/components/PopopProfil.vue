@@ -6,7 +6,7 @@
         </div>
         <div class="information">
             <p class="pseudo">Pseudo</p>
-            <p class="email">emaio@gmail.com</p>
+            <p class="email">email@gmail.com</p>
         </div>
         <hr>
         <div class="btn">
@@ -25,17 +25,8 @@
             <img src="../assets/icons/video.svg" alt="">
             <a href="">Mes vidéos</a>
             </router-link>
-
         </div>
-        
-
-
-        
-        
-        
     </div>
-
-
 </template>
 
 <script>
@@ -58,7 +49,7 @@ export default {
 
 .main2{
     float:right;
-    border: 1px solid black;
+    // border: 1px solid black;
     width: 15%;
     background-color: #474747;
 
@@ -100,6 +91,5 @@ div.sidebarProfil-toggled-of{
     display: none;
 }
 
-    
 </style>
 

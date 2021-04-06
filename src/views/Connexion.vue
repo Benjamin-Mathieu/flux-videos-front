@@ -69,7 +69,7 @@ export default {
 
 div.connexionForm{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     width: 80%;
     margin: auto;
     margin-top: 10% ;
@@ -78,6 +78,8 @@ div.connexionForm{
     & div.content{
         width: 70%;
         margin: auto;
+        grid-column-start: 1;
+        grid-column-end: 4;
         img{
             display: block;
             margin: auto;
@@ -104,6 +106,8 @@ div.connexionForm{
         border-radius: 10px;
         height: auto;
         box-shadow: 0px 0px 50px 0px;
+        grid-column-start: 5;
+        grid-column-end: 10;
 
         input{
             width: 70%;
