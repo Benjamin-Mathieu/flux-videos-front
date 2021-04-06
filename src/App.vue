@@ -61,6 +61,10 @@ export default {
     text-decoration: none;
   }
 
+  .main2 {
+    display: none;
+  }
+
 
 }
 </style>

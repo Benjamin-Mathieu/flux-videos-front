@@ -1,7 +1,9 @@
 <template>
-  <div v-for="stream in $store.state.streams" :key="stream.id">
+  <div class="public-streams">
+    <div v-for="stream in $store.state.streams" :key="stream.id">
       <Stream :stream="stream"/>
     </div>
+  </div>
 </template>
 
 <script>
@@ -15,3 +17,11 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+  .public-streams {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 1.5em;
+  }
+</style>
