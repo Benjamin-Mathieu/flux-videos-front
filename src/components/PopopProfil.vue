@@ -47,13 +47,12 @@ export default {
 
 <style lang="scss">
 
-.main2{
-    float:right;
-    // border: 1px solid black;
-    width: 15%;
-    background-color: #474747;
-
     div.sidebarProfil{
+        position: absolute;
+        right: 0%;
+        background-color: #474747;
+        width: 10%;
+        
         div.img{
             border: 1px solid black;
             border-radius: 100% ;
@@ -85,7 +84,7 @@ export default {
             }
         }
     }
-}
+
 
 div.sidebarProfil-toggled-of{
     display: none;

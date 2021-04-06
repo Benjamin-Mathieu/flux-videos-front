@@ -79,7 +79,7 @@ div.connexionForm{
         width: 70%;
         margin: auto;
         grid-column-start: 1;
-        grid-column-end: 4;
+        grid-column-end: 5;
         img{
             display: block;
             margin: auto;
@@ -107,7 +107,7 @@ div.connexionForm{
         height: auto;
         box-shadow: 0px 0px 50px 0px;
         grid-column-start: 5;
-        grid-column-end: 10;
+        grid-column-end: 11;
 
         input{
             width: 70%;

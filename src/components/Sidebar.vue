@@ -43,6 +43,7 @@ export default {
 .main{
   width: 10%;
   float: left;
+  position: absolute;
 }
 .sidebar {
   width: 100%;
@@ -51,7 +52,7 @@ export default {
   align-items: center;
   flex-direction: column;
   transition: height 0.15, ease-out;
-
+  
   a {
     color: whitesmoke;
   }
