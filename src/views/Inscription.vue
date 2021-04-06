@@ -43,6 +43,7 @@ export default {
             username:'dazadzadz',
             mail:'dazadz@mdr.fr',
             password:'mdr',
+            confirmPassword: 'mdr'
         }
     },
     methods:

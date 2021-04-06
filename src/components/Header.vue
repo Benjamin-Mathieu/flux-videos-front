@@ -52,10 +52,8 @@ export default {
 header {
   height: 80px;
   background-color: #474747;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  display: flex; justify-content: center; align-items: center;
+  margin-bottom: 3em;
   .icons {
     height: 30px;
     width: 30px;
