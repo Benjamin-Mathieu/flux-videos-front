@@ -134,6 +134,8 @@ export default {
             // windows en cas de ragequit
             api.delete('/stream/'+this.streamArray['id']).then(response=>
             {
+                connection.closeSocket();
+                this.emitter.emit("charger-streams");
                 alert('le stream est stop')
                 this.$router.push('/');
             }).catch(error=>{
