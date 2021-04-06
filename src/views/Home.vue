@@ -1,5 +1,5 @@
 <template>
-  <div v-for="stream in $store.state.streams">
+  <div v-for="stream in $store.state.streams" :key="stream.id">
       <Stream :stream="stream"/>
     </div>
 </template>
