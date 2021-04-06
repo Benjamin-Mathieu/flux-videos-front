@@ -98,19 +98,19 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
-                navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
+                navigator.mediaDevices.getUserMedia({audio: true, screen :true})
 
                 // Success callback
                 .then(stream => {
                     this.stream = stream;
-                    
+                    console.log("tamere")
                     const mediaStream = new MediaStream(stream);
                     const video = document.querySelector('video');
                     video.srcObject = mediaStream;
 
                     const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
                     this.recorder = mediaRecorder;
-                    
+                    console.log(this.recorder);
                     mediaRecorder.ondataavailable = e => {
                         this.recordedChunks.push(e.data);
                     }
@@ -134,7 +134,9 @@ export default {
 
             // close socket.io connection
             connection.closeSocket();
+
             console.log(this.streamArray['id'])
+            this.downloadStream();
             // windows en cas de ragequit
             api.delete('/stream/'+this.streamArray['id']).then(response=>
             {
@@ -150,13 +152,25 @@ export default {
             this.stream.getTracks().forEach(track => { track.stop(); });
             let blob = new Blob(this.recordedChunks, {type: "video/mpeg"});
             let url =  URL.createObjectURL(blob);
+            console.log(blob);
+            const data = new FormData()
+            data.append('title','lol.mpeg')
+            data.append('data',blob)
+            api.post('/video',data
+            ).then(response=>
+            {
+                alert('video envoyé')
+            }).catch(error=>{
+                alert(error.response.data.message)
+            })
+    /*      
             let a = document.createElement("a");
             document.body.appendChild(a);
             a.style = "display: none";
             a.href = url;
             a.download = this.clipName + '.mpeg';
             a.click();
-            setTimeout(function() { URL.revokeObjectURL(url); }, 100);
+            setTimeout(function() { URL.revokeObjectURL(url); }, 100);*/
         }
     }//method
 }
