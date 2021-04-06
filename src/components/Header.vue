@@ -8,24 +8,15 @@
     
     <form action="" class="search">
       <input type="text" placeholder="Rechercher" />
-      <img
-        class="icons"
-        src="../assets/icons/search-black-36dp.svg"
-        alt="search"
-      />
+      <img class="icons" src="../assets/icons/search-black-36dp.svg" alt="search"/>
     </form>
+
     <button class="stream-buttons">URGENCE</button>
     <button class="stream-buttons">
       <router-link to="/stream">Lancer Stream</router-link>
     </button>
-    <!--<button class="stream-buttons">
-      <router-link to="/stream">Regarder Stream</router-link>
-    </button>-->
-    <img
-      class="icons"
-      src="../assets/icons/notifications_none-white-36dp.svg"
-      alt="notifications"
-    />
+    
+    <img class="icons" src="../assets/icons/notifications_none-white-36dp.svg" alt="notifications"/>
     <button v-if="this.$store.state.token" @click="toggleSidebarProfil">
       <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil"/>
     </button>
@@ -85,6 +76,10 @@ header {
     border-radius: 0.3em;
     border: none;
     margin: 1em;
+
+    a{
+      color: whitesmoke;
+    }
   }
 
   form.search {

@@ -6,7 +6,7 @@
                 <div class="avatar"></div>
                 <div>
                     <span>{{stream.title}}</span><br>
-                    <span>{{stream.id_user}}</span>
+                    <span>Pseudo créateur</span>
                 </div>
             </div>
         </router-link>
@@ -16,6 +16,11 @@
 <script>
 export default {
     props: ['stream'],
+    data() {
+        return {
+            
+        }
+    },
     mounted()
     {
         

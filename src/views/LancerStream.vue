@@ -27,11 +27,10 @@
                 <button class="startStream" ref="start-button">START</button>
             </form>
         </div>
-        <div v-else>
+        <div class="emitter-options" v-else>
             <button @click="stopStream">Arreter le stream</button>
             <button @click="recordStream">Record</button>
             <button @click="downloadStream">Download</button>
-            <video></video>
         </div>
 
     </div>
@@ -59,7 +58,6 @@ export default {
     },
     mounted()
     {
-
     },
     methods:
     {
@@ -98,14 +96,12 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
-                navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
 
-                // Success callback
+                navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
                 .then(stream => {
                     this.stream = stream;
                     
                     const mediaStream = new MediaStream(stream);
-                    const video = document.querySelector('video');
                     video.srcObject = mediaStream;
 
                     const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
@@ -162,7 +158,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 div.FormLancerStream{
     border: solid 1px black;
@@ -250,6 +246,10 @@ div.FormLancerStream{
         background-color: rgb(110, 101, 230);
         color: white;
         border-radius: 10px;
+    }
+
+    video {
+        width: 300px; height: 300px;
     }
 
 }

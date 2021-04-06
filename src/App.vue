@@ -1,12 +1,5 @@
 <template>
   <Header />
-  <div class="main">
-    <Sidebar />
-  </div>
-
-  <div class="main2">
-    <SidebarProfil/>
-  </div>
   <router-view />
 </template>
 
@@ -27,10 +20,9 @@ export default {
     chargerStreams() {
       api.get("home").then(response => {
         this.$store.commit("setStreams", response.data.streams);
-        console.log(response.data.streams)
         console.log(this.$store.state.streams)
       }).catch(error => {
-        console.log(error.response.data.message)
+        console.error(error.response.data.message)
       })
     }
   }
@@ -51,7 +43,6 @@ export default {
   height: 100vh;
 
   a {
-    font-weight: bold;
     text-decoration: none;
   }
 

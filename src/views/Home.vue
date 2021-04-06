@@ -13,7 +13,7 @@ export default {
     Stream
   },
   mounted() {
-    console.log(this.$store.state.token)
+    console.log("userCo", this.$store.state.UserCo);
   },
 }
 </script>
