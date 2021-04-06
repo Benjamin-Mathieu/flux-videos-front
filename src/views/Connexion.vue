@@ -26,34 +26,6 @@
 
 <script>
 export default {
-<<<<<<< HEAD
-    data()
-    {
-        return{
-            username : 'test',
-            password : 'test'
-        }
-    },
-    methods:
-    {
-        connexionCompte()
-        {
-            api.post('signin',{
-                username: this.username,
-                password : this.password
-            }).then(response => {
-                //this.$store.commit('setUser',response.data.username);
-                //this.$store.commit('settoken',response.data.token);
-
-                this.$router.push('/se-connecter');
-            }).catch(error => {
-                alert(error.response.data.message);
-            })
-        }
-    }
-}
-</script>
-=======
     data() {
         return {
             login: '',
@@ -164,4 +136,3 @@ div.connexionForm{
 }
     
 </style>
->>>>>>> cb896d13c9f85b1fcd1ff534939bdbc602dcdf6e
