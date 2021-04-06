@@ -12,16 +12,10 @@
 
 <script>
 import Header from "@/components/Header.vue";
-import Sidebar from "@/components/Sidebar.vue";
-import SidebarProfil from "@/components/PopopProfil.vue";
-
 
 export default {
   components: {
     Header,
-    Sidebar,
-    SidebarProfil
-
   },
 
   mounted() {

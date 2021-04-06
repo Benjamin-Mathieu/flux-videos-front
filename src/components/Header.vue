@@ -1,8 +1,11 @@
 <template>
   <header>
-    <button @click="toggleSidebar">
+    <button @click="showSideBar">
       <img class="icons" src="../assets/icons/menu-white-36dp.svg" alt="menu" />
     </button>
+    <br>
+    <Sidebar  :isOpen="this.isOpen"/>
+    
     <form action="" class="search">
       <input type="text" placeholder="Rechercher" />
       <img
@@ -29,32 +32,36 @@
     <button v-else @click="Connexion">
       <img class="icons" src="../assets/icons/log-out.svg" alt="profil"/>
     </button>
+    <SidebarProfil/>
     
   </header>
 </template>
 
 <script>
+import Sidebar from "@/components/Sidebar.vue";
+import SidebarProfil from "@/components/PopopProfil.vue";
+
 export default {
+  components: {
+    Sidebar,
+    SidebarProfil
+  },
   data() {
     return {
       sidebarOpen: false,
-      sidebarProfil: false
+      sidebarProfil: true,
+      isOpen: false
     };
   },
 
   methods: {
-    toggleSidebar() {
-      this.sidebarOpen = !this.sidebarOpen;
-      this.emitter.emit("toggle-sidebar", this.sidebarOpen);
-    },
-
-    toggleSidebarProfil() {
-      this.sidebarProfil = !this.sidebarProfil;
-      this.emitter.emit("toggle-sidebarProfil", this.sidebarProfil);
-    },
 
     Connexion(){
       this.$router.push('/connexion');
+    },
+    showSideBar(){     
+      this.isOpen = !this.isOpen;
+      console.log(this.isOpen)
     }
   }
 };

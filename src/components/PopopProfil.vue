@@ -36,7 +36,7 @@
 export default {
   data() {
     return {
-      isOpenProfil: false
+      isOpenProfil: true
     };
   },
 
@@ -99,7 +99,7 @@ export default {
 }
 
 div.sidebarProfil-toggled-of{
-    display: none;
+    display: block;
 }
 
     

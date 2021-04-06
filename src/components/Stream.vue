@@ -29,6 +29,7 @@ export default {
         .avatar {
             background-color: #CCC; border-radius: 50%; height: 50px; width: 50px;
             margin-right: 1em;
+            z-index: 1;
         }
 
         .img {
