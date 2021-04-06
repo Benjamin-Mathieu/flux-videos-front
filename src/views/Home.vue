@@ -9,6 +9,9 @@ import Stream from'@/components/Stream.vue';
 export default {
   components: {
     Stream
-  }
+  },
+  mounted() {
+    
+  },
 }
 </script>

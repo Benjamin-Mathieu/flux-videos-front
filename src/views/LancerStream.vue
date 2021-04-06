@@ -1,26 +1,31 @@
 <template>
     <div>
-        <div v-if="formulaire">
-        <form @submit.prevent="startStream">
-        <label for="stream-name">Titre du stream: </label>
-        <input v-model="title" type="text" id="stream-name">
+        <div class="FormLancerStream" v-if="formulaire">
+            <h1 class="title">Lancer votre stream</h1>
+            <form @submit.prevent="startStream">
+                <div class="stream-name">
+                    <label for="stream-name">Titre du stream: </label>
+                    <br>
+                    <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
+                </div>
+                
+                <div class="private-stream">
+                    <label for="private">Mettre le stream en privé?</label>
+                    <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
+                </div>
+                
+                <div class="ano-stream">
+                    <label for="anonymous">Anonyme</label>
+                    <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
+                </div>
 
-        <div>
-        <label for="private">Mettre le stream en privé?</label>
-        <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
-        </div>
-        
-        <div>
-        <label for="anonymous">Anonyme</label>
-        <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
-        </div>
+                <div class="urgency-stream">
+                    <label for="urgency">Mode urgence</label>
+                    <input v-model="checkbox_urgency" type="checkbox" id="urgency">
+                </div>
 
-        <div>
-        <label for="urgency">Mode urgence</label>
-        <input v-model="checkbox_urgency" type="checkbox" id="urgency">
-        </div>
-        <button ref="start-button">START</button>
-        </form>
+                <button class="startStream" ref="start-button">START</button>
+            </form>
         </div>
         <div v-else>
             <button @click="stopStream">Arreter le stream</button>
@@ -34,8 +39,9 @@
 
 <script>
 var connection = new RTCMultiConnection();
-connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
-connection.autoCloseEntireSession = true;
+
+                // this line is VERY_important
+                connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 export default {
     data()
@@ -134,8 +140,6 @@ export default {
             // windows en cas de ragequit
             api.delete('/stream/'+this.streamArray['id']).then(response=>
             {
-                connection.closeSocket();
-                this.emitter.emit("charger-streams");
                 alert('le stream est stop')
                 this.$router.push('/');
             }).catch(error=>{
@@ -161,5 +165,95 @@ export default {
 </script>
 
 <style lang="scss">
+
+div.FormLancerStream{
+    border: solid 1px black;
+    width: 50%;
+    margin: auto;
+    margin-top:50px;
+    border-radius: 2%;
+    box-shadow: 0px 0px 30px 0px;
+
+    h1.title{
+        text-align: center;
+        font-size: 40px;
+        margin-bottom: 40px;
+        margin-top:40px;
+    }
+
+    div.stream-name{
+        width: 80%;
+        margin: auto;
+        margin-bottom: 20px;
+        input{
+            width: 100%;
+            height: 40px;
+        }
+    }
+    div.private-stream{
+        width: 80%;
+        margin: auto;
+        margin-bottom: 20px;
+        position: relative;
+        padding: 15px 30px 15px 62px;
+        border: 3px solid #fff;
+        border-radius: 100px;
+        color: #fff;
+        background-color: #6a8494;
+        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+
+        input[type="checkbox"]{
+            margin-left: 20px;
+        }
+    }
+
+    div.ano-stream{
+        width: 80%;
+        margin: auto;
+        margin-bottom: 20px;
+        position: relative;
+        padding: 15px 30px 15px 62px;
+        border: 3px solid #fff;
+        border-radius: 100px;
+        color: #fff;
+        background-color: #6a8494;
+        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+
+        input[type="checkbox"]{
+            margin-left: 20px;
+        }
+    }
+
+    div.urgency-stream{
+        width: 80%;
+        margin: auto;
+        margin-bottom: 20px;
+        position: relative;
+        padding: 15px 30px 15px 62px;
+        border: 3px solid #fff;
+        border-radius: 100px;
+        color: #fff;
+        background-color: #6a8494;
+        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+
+        input[type="checkbox"]{
+            margin-left: 20px;
+        }
+    }
+
+    button.startStream{
+        display: block;
+        margin: auto;
+        margin-top: 20px;
+        margin-bottom: 40px;
+        width: 40%;
+        height: 55px;
+        
+        background-color: rgb(110, 101, 230);
+        color: white;
+        border-radius: 10px;
+    }
+
+}
     
 </style>
