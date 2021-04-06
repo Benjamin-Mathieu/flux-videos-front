@@ -42,6 +42,12 @@ const routes = [
     name: "Inscription",
     component: () =>
       import("../views/Inscription.vue")
+  },
+  {
+    path: "/se-connecter",
+    name: "connexion",
+    component: () =>
+    import("../views/Connexion.vue")
   }
 ];
 
