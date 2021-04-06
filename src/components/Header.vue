@@ -23,8 +23,11 @@
       src="../assets/icons/notifications_none-white-36dp.svg"
       alt="notifications"
     />
-    <button  @click="toggleSidebarProfil">
+    <button v-if="this.$store.state.token" @click="toggleSidebarProfil">
       <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil"/>
+    </button>
+    <button v-else @click="Connexion">
+      <img class="icons" src="../assets/icons/log-out.svg" alt="profil"/>
     </button>
     
   </header>
@@ -34,8 +37,8 @@
 export default {
   data() {
     return {
-      sidebarOpen: true,
-      sidebarProfil: true
+      sidebarOpen: false,
+      sidebarProfil: false
     };
   },
 
@@ -48,6 +51,10 @@ export default {
     toggleSidebarProfil() {
       this.sidebarProfil = !this.sidebarProfil;
       this.emitter.emit("toggle-sidebarProfil", this.sidebarProfil);
+    },
+
+    Connexion(){
+      this.$router.push('/connexion');
     }
   }
 };

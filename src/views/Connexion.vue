@@ -9,7 +9,7 @@
 
         <div class="form-content">
 
-            <form @submit.prevent="setConnexion">
+            <form @submit.prevent="setConnexion()">
                 <input v-model="login" type="text" name="txt_login" required placeholder="Saisir votre login">
                 <br>
                 <input v-model="password" type="password" name="txt_login" required placeholder="Saisir votre mot de passe">
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
 export default {
     data() {
         return {
@@ -51,7 +52,11 @@ export default {
                 ).then(response=>
                 {
                     console.log(response.data); //contenu des data
-                    //this.$router.push('/se-connecter');
+                    let decoded = jwt_decode(response.data);
+                    this.$store.commit('setToken', response.data);
+                    this.$store.commit('setUserCo', decoded);
+                    console.log(decoded);
+                    this.$router.push('/');
                 }).catch(error=>
                 {
                     alert("Veuillez saisir le bon login et password");

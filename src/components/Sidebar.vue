@@ -27,7 +27,7 @@
 export default {
   data() {
     return {
-      isOpen: true
+      isOpen: false
     };
   },
 
@@ -35,7 +35,8 @@ export default {
     this.emitter.on("toggle-sidebar", isOpen => {
       this.isOpen = isOpen;
     });
-  }
+  },
+  
 };
 </script>
 

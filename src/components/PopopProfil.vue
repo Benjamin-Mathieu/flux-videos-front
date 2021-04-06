@@ -2,18 +2,18 @@
     <div class="sidebarProfil" :class="{ 'sidebarProfil-toggled-of': !isOpenProfil}">
 
         <div class="img">
-            <img src="https://avatars.dicebear.com/api/bottts/gablapute.svg" alt="">
+            <img class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/'+this.$store.state.UserCo['email']+'.svg'" alt="Avatar" width="20px">
         </div>
         <div class="information">
-            <p class="pseudo">Pseudo</p>
-            <p class="email">emaio@gmail.com</p>
+            <p class="pseudo">{{this.$store.state.UserCo['username']}}</p>
+            <p class="email">{{this.$store.state.UserCo['email']}}</p>
         </div>
         <hr>
         <div class="btn">
-            <router-link to="">
+            <a @click="Disconected">
                 <img src="../assets/icons/log-out.svg" alt="">
                 <a href="">Se Déconnecter</a>
-            </router-link>
+            </a>
 
             <br>
             <router-link to="">
@@ -28,13 +28,7 @@
 
         </div>
         
-
-
-        
-        
-        
     </div>
-
 
 </template>
 
@@ -42,7 +36,7 @@
 export default {
   data() {
     return {
-      isOpenProfil: true
+      isOpenProfil: false
     };
   },
 
@@ -50,7 +44,15 @@ export default {
     this.emitter.on("toggle-sidebarProfil", isOpenProfil => {
       this.isOpenProfil = isOpenProfil;
     });
-  }
+  },
+  
+  methods: {
+      Disconected(){
+        this.$store.commit('setToken', false);
+        this.$store.commit('setUserCo', false);
+        this.$router.push('/connexion');
+      }
+  },
 };
 </script>
 
