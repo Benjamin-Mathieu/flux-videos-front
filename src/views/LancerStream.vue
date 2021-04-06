@@ -39,9 +39,8 @@
 
 <script>
 var connection = new RTCMultiConnection();
-
-                // this line is VERY_important
-                connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+// this line is VERY_important
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 export default {
     data()
@@ -78,8 +77,9 @@ export default {
                 this.streamArray = response.data
                 console.log(response.data);
                 connection.session = {
-                    audio: true,
-                    video: true,
+                    // audio: true,
+                    // video: true,
+                    screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -98,7 +98,7 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
-                navigator.mediaDevices.getUserMedia({audio:true, video: true})
+                navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
 
                 // Success callback
                 .then(stream => {
@@ -123,8 +123,6 @@ export default {
         },
         stopStream()
         {
-
-
             connection.getAllParticipants().forEach(function(pid) {
                 connection.disconnectWith(pid);
             });
