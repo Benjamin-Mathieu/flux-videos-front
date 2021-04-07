@@ -45,9 +45,8 @@ export default {
   flex-direction: column;
   transition: height 0.15, ease-out;
   position: absolute;
-  top: -22%;
+  top: 80px;
   left: 0%;
-  margin-top: 15%;
 
   a {
     color: whitesmoke;

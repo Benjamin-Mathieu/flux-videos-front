@@ -80,8 +80,8 @@ export default {
                 console.log(response.data);
                 connection.session = {
                     audio: true,
-                    video: true,
-                    //screen: true,
+                    // video: true,
+                    screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -102,7 +102,7 @@ export default {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
 
-                navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
+                navigator.mediaDevices.getUserMedia({audio:true, screen: true})
                 .then(stream => {
                     this.stream = stream;
                     
