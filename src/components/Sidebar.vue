@@ -29,22 +29,9 @@
 <script>
 export default {
   props:['isOpen'],
-  data() {
-    return {
-
-    };
-  },
-
   mounted() {
 
-    console.log(this.isOpen)
   },
-  methods: {
-    showSideBar(){
-      this.isOpen = !this.isOpen;
-    }
-  },
-  
 };
 </script>
 
@@ -60,7 +47,7 @@ export default {
   position: absolute;
   top: -22%;
   left: 0%;
-  margin-top: 280px;
+  margin-top: 15%;
 
   a {
     color: whitesmoke;

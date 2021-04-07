@@ -1,5 +1,6 @@
 <template>
   <header>
+
     <button @click="showSideBar">
       <img class="icons" src="../assets/icons/menu-white-36dp.svg" alt="menu" />
     </button>
@@ -26,13 +27,14 @@
       src="../assets/icons/notifications_none-white-36dp.svg"
       alt="notifications"
     />
-    <button v-if="this.$store.state.token" @click="toggleSidebarProfil">
+
+    <button  v-if="this.$store.state.token" @click="showSideBarProfile">
       <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil"/>
     </button>
     <button v-else @click="Connexion">
       <img class="icons" src="../assets/icons/log-out.svg" alt="profil"/>
     </button>
-    <SidebarProfil/>
+    <SidebarProfil :isOpenProfil="this.isOpenProfil"/>
     
   </header>
 </template>
@@ -50,7 +52,8 @@ export default {
     return {
       sidebarOpen: false,
       sidebarProfil: true,
-      isOpen: false
+      isOpen: false,
+      isOpenProfil: false,
     };
   },
 
@@ -62,6 +65,11 @@ export default {
     showSideBar(){     
       this.isOpen = !this.isOpen;
       console.log(this.isOpen)
+
+    },
+    showSideBarProfile(){     
+      this.isOpenProfil = !this.isOpenProfil;
+      //console.log(this.isOpenProfil)
     }
   }
 };
@@ -69,10 +77,19 @@ export default {
 
 <style lang="scss">
 header {
+  button:first-of-type{
+    background-color: transparent;
+    border: none;
+  }
+
+  button:nth-child(8){
+    background-color: transparent;
+    border: none;
+  }
+
   height: 80px;
   background-color: #474747;
   display: flex; justify-content: center; align-items: center;
-  margin-bottom: 3em;
   .icons {
     height: 30px;
     width: 30px;

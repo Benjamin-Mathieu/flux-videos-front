@@ -27,7 +27,7 @@ export default {
     chargerStreams() {
       api.get("home").then(response => {
         this.$store.commit("setStreams", response.data.streams);
-        console.log(response.data.streams)
+        console.log(response.data)
         console.log(this.$store.state.streams)
       }).catch(error => {
         console.log(error.response.data.message)

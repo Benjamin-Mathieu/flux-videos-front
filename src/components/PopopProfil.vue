@@ -1,5 +1,5 @@
 <template>
-    <div class="sidebarProfil" :class="{ 'sidebarProfil-toggled-of': !isOpenProfil}">
+    <div v-if="this.isOpenProfil" class="sidebarProfil">
 
         <div class="img">
             <img class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/'+this.$store.state.UserCo['email']+'.svg'" alt="Avatar" width="20px">
@@ -34,18 +34,7 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isOpenProfil: true
-    };
-  },
-
-  mounted() {
-    this.emitter.on("toggle-sidebarProfil", isOpenProfil => {
-      this.isOpenProfil = isOpenProfil;
-    });
-  },
-  
+  props:['isOpenProfil'],
   methods: {
       Disconected(){
         this.$store.commit('setToken', false);
@@ -58,13 +47,12 @@ export default {
 
 <style lang="scss">
 
-.main2{
-    float:right;
-    border: 1px solid black;
-    width: 15%;
-    background-color: #474747;
-
     div.sidebarProfil{
+        background-color: #474747;
+        margin-top:300px;
+        position: absolute;
+        right: 0%;
+        width: 10%;
         div.img{
             border: 1px solid black;
             border-radius: 100% ;
@@ -96,7 +84,7 @@ export default {
             }
         }
     }
-}
+
 
 div.sidebarProfil-toggled-of{
     display: block;

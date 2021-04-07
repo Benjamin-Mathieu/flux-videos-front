@@ -31,7 +31,7 @@
             <button @click="stopStream">Arreter le stream</button>
             <button @click="recordStream">Record</button>
             <button @click="downloadStream">Download</button>
-            <video></video>
+            <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p>
         </div>
 
     </div>
@@ -54,7 +54,8 @@ export default {
             stream : "",
             recorder: "",
             recordedChunks : [],
-            streamArray : []
+            streamArray : [],
+            roomid : "",
         }
     },
     mounted()
@@ -65,21 +66,28 @@ export default {
     {
         startStream()
         {
+            let username
+            if(this.$store.state.UserCo == false){
+                username = null;
+            }else{
+                username = this.$store.state.UserCo.username;
+            }
             api.post('stream',
             {
                 title:this.title,
                 visibility: this.checkbox_private,
                 anonymous: this.checkbox_anonymous,
-                urgency: this.checkbox_urgency
+                urgency: this.checkbox_urgency,
+                username: username
             }).then(response =>
             {
                 this.formulaire = false
                 this.streamArray = response.data
                 console.log(response.data);
                 connection.session = {
-                    // audio: true,
-                    // video: true,
-                    screen: true,
+                    audio: true,
+                    video: true,
+                    //screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -87,8 +95,9 @@ export default {
                     OfferToReceiveAudio: false,
                     OfferToReceiveVideo: false
                 }
-                let testid = response.data.id;
-                connection.open(testid);
+                let roomid = response.data.id;
+                this.roomid  =roomid;
+                connection.open(roomid);
                 console.log(connection)
                 this.emitter.emit('charger-streams')
             }).catch(error=>
@@ -99,7 +108,6 @@ export default {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
                 navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
-
                 // Success callback
                 .then(stream => {
                     this.stream = stream;
@@ -150,13 +158,17 @@ export default {
             this.stream.getTracks().forEach(track => { track.stop(); });
             let blob = new Blob(this.recordedChunks, {type: "video/mpeg"});
             let url =  URL.createObjectURL(blob);
-            let a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            a.href = url;
-            a.download = this.clipName + '.mpeg';
-            a.click();
-            setTimeout(function() { URL.revokeObjectURL(url); }, 100);
+            console.log(blob);
+            const data = new FormData()
+            data.append('title','lol.mpeg')
+            data.append('data',blob)
+            api.post('/video',data
+            ).then(response=>
+            {
+                alert('video envoyé')
+            }).catch(error=>{
+                alert(error.response.data.message)
+            })
         }
     }//method
 }
