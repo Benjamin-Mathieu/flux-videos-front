@@ -22,7 +22,6 @@
         <button @click="stopStream">Arreter le stream</button>
         <button @click="recordStream">Record</button>
         <button @click="downloadStream">Download</button>
-        <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p>
     </div>
 </template>
 
@@ -49,9 +48,12 @@ export default {
     },
     created() {
         // Appel de la fonction stopStream lorsque le streamer ferme l'onglet ou la page
-         window.addEventListener('beforeunload', () => {
-            this.stopStream();
-        }, false);        
+        // window.addEventListener('beforeunload', () => {
+        //     this.stopStream();
+        // }, false);
+        window.addEventListener('beforeunload', this.stopStream, false);
+
+              
     },
     mounted() {
         
@@ -80,8 +82,8 @@ export default {
                 console.log(response.data);
                 connection.session = {
                     audio: true,
-                    // video: true,
-                    screen: true,
+                    video: true,
+                    //screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -102,7 +104,7 @@ export default {
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
 
-                navigator.mediaDevices.getUserMedia({audio:true, screen: true})
+                navigator.mediaDevices.getUserMedia({audio:true, video:true, screen: true})
                 .then(stream => {
                     this.stream = stream;
                     
