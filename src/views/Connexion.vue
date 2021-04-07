@@ -73,13 +73,13 @@ div.connexionForm{
     width: 80%;
     margin: auto;
     margin-top: 10% ;
-    
 
     & div.content{
         width: 70%;
         margin: auto;
         grid-column-start: 1;
         grid-column-end: 5;
+        
         img{
             display: block;
             margin: auto;

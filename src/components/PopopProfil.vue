@@ -51,8 +51,8 @@ export default {
         position: absolute;
         right: 0%;
         background-color: #474747;
-        width: 10%;
-        
+        width: 12%;
+
         div.img{
             border: 1px solid black;
             border-radius: 100% ;
