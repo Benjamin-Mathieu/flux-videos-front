@@ -19,10 +19,10 @@
         </form>
     </div>
     <div class="emitter-options" v-else>
+        <video autoplay></video>
         <button @click="stopStream">Arreter le stream</button>
-        <button @click="recordStream">Record</button>
         <button @click="downloadStream">Download</button>
-        <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p>
+        <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
     </div>
 </template>
 
@@ -60,10 +60,10 @@ export default {
     {
         startStream()
         {
-            let username
+            let username;
             if(this.$store.state.UserCo == false){
                 username = null;
-            }else{
+            } else{
                 username = this.$store.state.UserCo.username;
             }
             api.post('stream',
@@ -78,6 +78,12 @@ export default {
                 this.formulaire = false
                 this.streamArray = response.data
                 console.log(response.data);
+
+                connection.autoCreateMediaElement = false;
+                // connection.onNumberOfBroadcastViewersUpdated = function(event) {
+                //     console.log('Number of broadcast (', event.broadcastId, ') viewers', event.numberOfBroadcastViewers);
+                // };
+
                 connection.session = {
                     audio: true,
                     // video: true,
@@ -89,25 +95,27 @@ export default {
                     OfferToReceiveAudio: false,
                     OfferToReceiveVideo: false
                 }
+                
                 let roomid = response.data.id;
                 this.roomid  =roomid;
                 connection.open(roomid);
                 console.log(connection)
-                this.emitter.emit('charger-streams')
+                this.emitter.emit('charger-streams');
+
             }).catch(error=>
             {
                 alert(error.response.data.message)
-            })
+            });
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                console.log('getUserMedia supported.');
 
                 navigator.mediaDevices.getUserMedia({audio:true, screen: true})
                 .then(stream => {
                     this.stream = stream;
-                    
+
                     const mediaStream = new MediaStream(stream);
-                    video.srcObject = mediaStream;
+                    let video = document.querySelector('video');
+                    video.src = mediaStream;
 
                     const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
                     this.recorder = mediaRecorder;
