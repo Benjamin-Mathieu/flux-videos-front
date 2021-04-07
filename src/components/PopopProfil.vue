@@ -1,19 +1,19 @@
 <template>
-    <div class="sidebarProfil" :class="{ 'sidebarProfil-toggled-of': !isOpenProfil}">
+    <div v-if="this.isOpenProfil" class="sidebarProfil">
 
         <div class="img">
-            <img src="https://avatars.dicebear.com/api/bottts/gablapute.svg" alt="">
+            <img class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/'+this.$store.state.UserCo['email']+'.svg'" alt="Avatar" width="20px">
         </div>
         <div class="information">
-            <p class="pseudo">Pseudo</p>
-            <p class="email">email@gmail.com</p>
+            <p class="pseudo">{{this.$store.state.UserCo['username']}}</p>
+            <p class="email">{{this.$store.state.UserCo['email']}}</p>
         </div>
         <hr>
         <div class="btn">
-            <router-link to="">
+            <a @click="Disconected">
                 <img src="../assets/icons/log-out.svg" alt="">
                 <a href="">Se Déconnecter</a>
-            </router-link>
+            </a>
 
             <br>
             <router-link to="">
@@ -31,28 +31,25 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isOpenProfil: true
-    };
+  props:['isOpenProfil'],
+  methods: {
+      Disconected(){
+        this.$store.commit('setToken', false);
+        this.$store.commit('setUserCo', false);
+        this.$router.push('/connexion');
+      }
   },
-
-  mounted() {
-    this.emitter.on("toggle-sidebarProfil", isOpenProfil => {
-      this.isOpenProfil = isOpenProfil;
-    });
-  }
 };
 </script>
 
 <style lang="scss">
 
     div.sidebarProfil{
+        background-color: #474747;
+        margin-top:300px;
         position: absolute;
         right: 0%;
-        background-color: #474747;
-        width: 12%;
-
+        width: 10%;
         div.img{
             border: 1px solid black;
             border-radius: 100% ;
@@ -87,7 +84,7 @@ export default {
 
 
 div.sidebarProfil-toggled-of{
-    display: none;
+    display: block;
 }
 
 </style>

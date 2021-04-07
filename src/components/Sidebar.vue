@@ -1,58 +1,53 @@
 <template>
-  <section class="sidebar" :class="{ 'sidebar-toggled-of': !isOpen,  'sidebar-toggled-on': isOpen}">
-    <img
-      class="icons"
-      src="../assets/icons/home-white-36dp.svg"
-      alt="Acceuil"
-    /><router-link to="/" class="link">Accueil</router-link>
-    <img
-      class="icons"
-      src="../assets/icons/library_add-white-36dp.svg"
-      alt="Bibliothéques"
-    /><router-link to="/video">Bibliothéques</router-link>
-    <img
-      class="icons"
-      src="../assets/icons/subscriptions-white-36dp.svg"
-      alt="Abonnements"
-    /><router-link to="/subs">Abonnements</router-link>
-    <img
-      class="icons"
-      src="../assets/icons/settings-white-36dp.svg"
-      alt="Paramètres"
-    /><router-link to="/settings">Paramètres</router-link>
+  <section>
+    <div v-if="this.isOpen"  class="sidebar">
+      <img
+        class="icons"
+        src="../assets/icons/home-white-36dp.svg"
+        alt="Acceuil"
+      /><router-link to="/" class="link">Accueil</router-link>
+      <img
+        class="icons"
+        src="../assets/icons/library_add-white-36dp.svg"
+        alt="Bibliothéques"
+      /><router-link to="/video">Bibliothéques</router-link>
+      <img
+        class="icons"
+        src="../assets/icons/subscriptions-white-36dp.svg"
+        alt="Abonnements"
+      /><router-link to="/subs">Abonnements</router-link>
+      <img
+        class="icons"
+        src="../assets/icons/settings-white-36dp.svg"
+        alt="Paramètres"
+      /><router-link to="/settings">Paramètres</router-link>
+    </div>
+
   </section>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      isOpen: false
-    };
-  },
-
+  props:['isOpen'],
   mounted() {
-    this.emitter.on("toggle-sidebar", isOpen => {
-      this.isOpen = isOpen;
-    });
-  }
+
+  },
 };
 </script>
 
-<style lang="scss">
-.main{
-  width: 10%;
-  float: left;
-  position: absolute;
-}
+<style lang="scss" >
+
 .sidebar {
-  width: 100%;
+  width: 10%;
   background-color: #474747;
   display: flex;
   align-items: center;
   flex-direction: column;
   transition: height 0.15, ease-out;
-  
+  position: absolute;
+  top: 80px;
+  left: 0%;
+
   a {
     color: whitesmoke;
   }

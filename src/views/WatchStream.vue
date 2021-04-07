@@ -1,20 +1,23 @@
 <template>
     <div class="watch-stream">
+        <h1>{{this.stream.title}}</h1>
         <div class="stream"></div>
         <div class="streamer">
             <div class="info-streamer">
-                <img src="../assets/icons/add_a_photo-24px.svg" alt="avatar-streamer" class="avatar-streamer">
+                <img v-if="this.stream.anonymous == 0" class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/'+this.creator.mail+'.svg'" alt="Avatar" width="20px">
+                <img v-else class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/imAnAnonymeUserIncroyable.svg'" alt="Avatar" width="20px">
                 <div>
-                    <h3>Pseudo du streamer</h3>
-                    <button @click="subscribeStreamer"><img src="../assets/icons/heart.svg" alt="like-button"></button>
-                    <p>Description....</p>
+                    <h3 v-if="this.stream.anonymous == 0">{{this.creator.username}}</h3>
+                    <h3 v-else>Anonymous User</h3>
+                    <button class="subscribeStreamer" @click="subscribeStreamer"><img src="../assets/icons/heart.svg" alt="like-button"></button>
+                    <p v-if="this.stream.anonymous == 0">{{this.creator.descritpion}}</p>
                 </div> 
             </div>
             <div class="social-icons">
                 <a href="" target="_blank"><img src="../assets/icons/facebook.svg" alt="fb-icon"></a>
             </div>
         </div>
-        <div id="map"></div>
+        <div v-if="this.stream.urgency != 0" id="map"></div>
     </div>
 </template>
 
@@ -24,6 +27,12 @@ import L from "leaflet";
 
 
 export default {
+    data() {
+        return {
+            creator : [],
+            stream : [],
+        }
+    },
     mounted()
     {
         /*Si pas de room existante avec
@@ -73,7 +82,9 @@ export default {
                 let longitude = response.data.longitude;
                 console.log(latitude, longitude);
                 let map = L.map("map").setView([latitude, longitude], 15);
-            
+                console.log(response.data);
+                this.creator = response.data.creator;
+                this.stream = response.data;
                 let openStreetMapLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors',
                     maxZoom: 50
@@ -100,9 +111,14 @@ export default {
 <style lang="scss">
 
     .watch-stream {
+        h1{
+            text-align: center;
+            margin-top:50px;
+        }
         .stream {
             width: 80%;
             margin: auto;
+            
             video {
                 width: 100%;
             }
@@ -110,8 +126,8 @@ export default {
 
         .streamer {
             width: 80%;
-            .avatar-streamer {
-                width: 80px; height: 80px;
+            img.gravatar {           
+                width: 80px;   
             }
             div {
                 margin: .7em;
