@@ -83,8 +83,9 @@ export default {
                 
                 connection.session = {
                     audio: true,
-                    video: true,
-                    //screen: true,
+                    data: true,
+                    // video: true,
+                    screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -92,7 +93,7 @@ export default {
                     OfferToReceiveAudio: false,
                     OfferToReceiveVideo: false
                 }
-                
+                                
                 let roomid = response.data.id;
                 this.roomid  =roomid;
                 connection.open(roomid);
@@ -106,7 +107,7 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
-                navigator.mediaDevices.getUserMedia({audio:true, video:true, screen: true})
+                navigator.mediaDevices.getUserMedia({audio:true, screen: true})
                 .then(stream => {
                     this.stream = stream;
 
