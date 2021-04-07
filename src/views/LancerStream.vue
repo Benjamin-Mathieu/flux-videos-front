@@ -49,9 +49,12 @@ export default {
     },
     created() {
         // Appel de la fonction stopStream lorsque le streamer ferme l'onglet ou la page
-         window.addEventListener('beforeunload', () => {
-            this.stopStream();
-        }, false);        
+        // window.addEventListener('beforeunload', () => {
+        //     this.stopStream();
+        // }, false);
+        window.addEventListener('beforeunload', this.stopStream, false);
+
+              
     },
     mounted() {
         
@@ -83,8 +86,8 @@ export default {
                 
                 connection.session = {
                     audio: true,
-                    // video: true,
-                    screen: true,
+                    video: true,
+                    //screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -106,7 +109,7 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
-                navigator.mediaDevices.getUserMedia({audio:true, screen: true})
+                navigator.mediaDevices.getUserMedia({audio:true, video:true, screen: true})
                 .then(stream => {
                     this.stream = stream;
 
