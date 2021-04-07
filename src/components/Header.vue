@@ -11,7 +11,7 @@
       <img class="icons" src="../assets/icons/search-black-36dp.svg" alt="search"/>
     </form>
 
-    <button class="stream-buttons">URGENCE</button>
+    <button @click="launchUrgencyStream" class="stream-buttons">URGENCE</button>
     <button class="stream-buttons">
       <router-link to="/stream">Lancer Stream</router-link>
     </button>
@@ -32,6 +32,9 @@
 import Sidebar from "@/components/Sidebar.vue";
 import SidebarProfil from "@/components/PopopProfil.vue";
 
+var connection = new RTCMultiConnection();
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
 export default {
   components: {
     Sidebar,
@@ -41,18 +44,74 @@ export default {
     return {
       sidebarOpen: false,
       sidebarProfil: true,
-      isOpen: false
+      isOpen: false,
+      streamArray: [],
+      stream : "",
+      recorder: "",
+      recordedChunks : [],
+      streamArray : [],
     };
   },
 
   methods: {
-
     Connexion(){
       this.$router.push('/connexion');
     },
     showSideBar(){     
       this.isOpen = !this.isOpen;
       console.log(this.isOpen)
+    },
+
+    launchUrgencyStream() {
+      api.post('stream',
+      {
+          title: "Urgent",
+          visibility: true,
+          anonymous: false,
+          urgency: true
+      }).then(response =>
+      {
+          this.streamArray = response.data
+          connection.session = {
+              // audio: true,
+              // video: true,
+              screen: true,
+              oneway: true
+          };
+          connection.socketMessageEvent = 'screen-sharing';
+          connection.sdpConstraints.mandatory = {
+              OfferToReceiveAudio: false,
+              OfferToReceiveVideo: false
+          }
+          let testid = response.data.id;
+          connection.open(testid);
+          this.emitter.emit('charger-streams')
+      }).catch(error=>
+      {
+          alert(error.response.data.message)
+      })
+
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          console.log('getUserMedia supported.');
+
+          navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
+          .then(stream => {
+              this.stream = stream;
+              
+              const mediaStream = new MediaStream(stream);
+              video.srcObject = mediaStream;
+
+              const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
+              this.recorder = mediaRecorder;
+              
+              mediaRecorder.ondataavailable = e => {
+                  this.recordedChunks.push(e.data);
+              }
+              mediaRecorder.start(100);
+          })
+          .catch(e => { console.error('getUserMedia() failed: ' + e); });
+      }
+        
     }
   }
 };

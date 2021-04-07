@@ -13,7 +13,7 @@ export default {
 
   mounted() {
     this.chargerStreams();
-    this.emitter.on("charger-streams", this.chargerStreams)
+    this.emitter.on("charger-streams", this.chargerStreams);
   },
 
   methods: {

@@ -53,11 +53,17 @@ export default {
             stream : "",
             recorder: "",
             recordedChunks : [],
-            streamArray : []
+            streamArray : [],
         }
     },
-    mounted()
-    {
+    created() {
+        // Appel de la fonction stopStream lorsque le streamer ferme l'onglet ou la page
+         window.addEventListener('beforeunload', () => {
+            this.stopStream();
+        }, false);        
+    },
+    mounted() {
+        
     },
     methods:
     {
@@ -131,7 +137,7 @@ export default {
             // close socket.io connection
             connection.closeSocket();
             console.log(this.streamArray['id'])
-            // windows en cas de ragequit
+            
             api.delete('/stream/'+this.streamArray['id']).then(response=>
             {
                 alert('le stream est stop')
