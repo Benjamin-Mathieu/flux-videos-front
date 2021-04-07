@@ -25,6 +25,8 @@
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
+var connection = new RTCMultiConnection();
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 export default {
     data() {
@@ -48,9 +50,7 @@ export default {
         {
             let roomid = this.$route.params.id
             console.log(roomid)
-            var connection = new RTCMultiConnection();
-            // this line is VERY_important
-            connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+            
             connection.session = {
                 audio: true,
                 video: true,
