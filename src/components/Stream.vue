@@ -20,6 +20,11 @@
 <script>
 export default {
     props: ['stream'],
+    data() {
+        return {
+            
+        }
+    },
     mounted()
     {
         

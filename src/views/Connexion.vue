@@ -104,30 +104,41 @@ div.connexionForm{
 
     & div.form-content{
         width: 70%;
-        margin: auto;
-        border: 1px solid black;
         border-radius: 10px;
         height: auto;
-        box-shadow: 0px 0px 50px 0px;
+        box-shadow: 0px 0px 1em 0px;
+        border: none;
+        display: flex; justify-content: center; flex-direction: column; align-items: center;
 
         input{
-            width: 70%;
-            height: 45px;
+            height: 3em;
             margin-top: 20px;
-            margin-left: 15%;
+            border-radius: .7em;
+            width: 80%;
+            border: 1px solid #ccc;
+            padding: .3em;
         }
         input:first-of-type{
             margin-top: 30px;
         }
 
+        form {
+            text-align: center; width: 100%;
+        }
+
         button{
-            margin-top: 20px;
-            width: 50%;
-            height: 55px;
-            margin-left: 25%;
+            margin-top: 1em;
             background-color: rgb(110, 101, 230);
             color: white;
+            border: none;
             border-radius: 10px;
+            padding: 1em;
+            opacity: 0.9;
+        }
+        button:hover {
+            cursor: pointer;
+            opacity: 1;
+            transition: 0.3s ease-in;
         }
 
         p{
