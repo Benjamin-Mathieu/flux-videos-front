@@ -12,18 +12,18 @@
     </form>
 
     <button @click="launchUrgencyStream" class="stream-buttons">URGENCE</button>
-    <button class="stream-buttons">
+    <button v-if="this.$store.state.UserCo" class="stream-buttons">
       <router-link to="/stream">Lancer Stream</router-link>
     </button>
     
-    <img class="icons" src="../assets/icons/notifications_none-white-36dp.svg" alt="notifications"/>
+    <img v-if="this.$store.state.UserCo" class="icons" src="../assets/icons/notifications_none-white-36dp.svg" alt="notifications"/>
     <button v-if="this.$store.state.token" @click="toggleSidebarProfil">
       <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil"/>
     </button>
     <button v-else @click="Connexion">
       <img class="icons" src="../assets/icons/log-out.svg" alt="profil"/>
     </button>
-    <SidebarProfil/>
+    <SidebarProfil v-if="this.$store.state.UserCo"/>
     
   </header>
 </template>
