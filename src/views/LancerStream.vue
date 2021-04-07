@@ -49,12 +49,9 @@ export default {
     },
     created() {
         // Appel de la fonction stopStream lorsque le streamer ferme l'onglet ou la page
-        // window.addEventListener('beforeunload', () => {
-        //     this.stopStream();
-        // }, false);
-        window.addEventListener('beforeunload', this.stopStream, false);
-
-              
+        window.addEventListener('beforeunload', () => {
+            this.stopStream();
+        }, false);
     },
     mounted() {
         
