@@ -83,6 +83,7 @@ export default {
             margin: .7em 0;
             border-radius: .3em;
             border: 1px solid #CCC;
+            padding: .3em;
         }   
         button{
             width: 40%;

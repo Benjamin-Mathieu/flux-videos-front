@@ -1,38 +1,27 @@
 <template>
-    <div>
-        <div class="FormLancerStream" v-if="formulaire">
-            <h1 class="title">Lancer votre stream</h1>
-            <form @submit.prevent="startStream">
-                <div class="stream-name">
-                    <label for="stream-name">Titre du stream: </label>
-                    <br>
-                    <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
-                </div>
-                
-                <div class="private-stream">
-                    <label for="private">Mettre le stream en privé?</label>
-                    <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
-                </div>
-                
-                <div class="ano-stream">
-                    <label for="anonymous">Anonyme</label>
-                    <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
-                </div>
-
-                <div class="urgency-stream">
-                    <label for="urgency">Mode urgence</label>
-                    <input v-model="checkbox_urgency" type="checkbox" id="urgency">
-                </div>
-
-                <button class="startStream" ref="start-button">START</button>
-            </form>
-        </div>
-        <div class="emitter-options" v-else>
-            <button @click="stopStream">Arreter le stream</button>
-            <button @click="recordStream">Record</button>
-            <button @click="downloadStream">Download</button>
-        </div>
-
+    <div class="FormLancerStream" v-if="formulaire">
+        <h1 class="title">Lancer votre stream</h1>
+        <form @submit.prevent="startStream">
+                <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
+                    <div>
+                        <label for="private">Mettre le stream en privé?</label>
+                        <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
+                    </div>
+                    <div>
+                        <label for="anonymous">Anonyme</label>
+                        <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
+                    </div>
+                    <div>
+                        <label for="urgency">Mode urgence</label>
+                        <input v-model="checkbox_urgency" type="checkbox" id="urgency">
+                    </div>
+            <button id="startStream" ref="start-button">START</button>
+        </form>
+    </div>
+    <div class="emitter-options" v-else>
+        <button @click="stopStream">Arreter le stream</button>
+        <button @click="recordStream">Record</button>
+        <button @click="downloadStream">Download</button>
     </div>
 </template>
 
@@ -167,93 +156,52 @@ export default {
 <style lang="scss" scoped>
 
 div.FormLancerStream{
-    border: solid 1px black;
     width: 50%;
+    padding: 1em;
     margin: auto;
     margin-top:50px;
     border-radius: 2%;
-    box-shadow: 0px 0px 30px 0px;
+    box-shadow: 0px 0px 1em 0px;
+    text-align: center;
 
-    h1.title{
-        text-align: center;
-        font-size: 40px;
-        margin-bottom: 40px;
-        margin-top:40px;
-    }
+    form {
+        display: flex; justify-content: center; align-items: center; flex-direction: column;
 
-    div.stream-name{
-        width: 80%;
-        margin: auto;
-        margin-bottom: 20px;
-        input{
-            width: 100%;
-            height: 40px;
+        label {
+            margin-right: .7em;
         }
-    }
-    div.private-stream{
-        width: 80%;
-        margin: auto;
-        margin-bottom: 20px;
-        position: relative;
-        padding: 15px 30px 15px 62px;
-        border: 3px solid #fff;
-        border-radius: 100px;
-        color: #fff;
-        background-color: #6a8494;
-        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
 
-        input[type="checkbox"]{
-            margin-left: 20px;
+        #stream-name {
+            width: 50%;
+            padding: .7em;
+            margin-bottom: 2em;
+
+            height: 3em;
+            margin-top: 20px;
+            border-radius: .7em;
+            border: 1px solid #ccc;
+            padding: .3em;
         }
-    }
 
-    div.ano-stream{
-        width: 80%;
-        margin: auto;
-        margin-bottom: 20px;
-        position: relative;
-        padding: 15px 30px 15px 62px;
-        border: 3px solid #fff;
-        border-radius: 100px;
-        color: #fff;
-        background-color: #6a8494;
-        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
-
-        input[type="checkbox"]{
-            margin-left: 20px;
+        #startStream{
+            border: none;
+            margin-top: 2em;
+            padding: 1em;
+            width: 30%;
+            background-color: rgb(110, 101, 230);
+            color: white;
+            border-radius: .3em;
+            opacity: .9;
         }
-    }
-
-    div.urgency-stream{
-        width: 80%;
-        margin: auto;
-        margin-bottom: 20px;
-        position: relative;
-        padding: 15px 30px 15px 62px;
-        border: 3px solid #fff;
-        border-radius: 100px;
-        color: #fff;
-        background-color: #6a8494;
-        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
-
-        input[type="checkbox"]{
-            margin-left: 20px;
+        #startStream:hover {
+            cursor: pointer;
+            opacity: 1;
+            transition: .3s ease-in;
         }
+
     }
 
-    button.startStream{
-        display: block;
-        margin: auto;
-        margin-top: 20px;
-        margin-bottom: 40px;
-        width: 40%;
-        height: 55px;
-        
-        background-color: rgb(110, 101, 230);
-        color: white;
-        border-radius: 10px;
-    }
-
+    
     video {
         width: 300px; height: 300px;
     }

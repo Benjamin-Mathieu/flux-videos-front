@@ -104,17 +104,19 @@ div.connexionForm{
 
     & div.form-content{
         width: 70%;
-        border: 1px solid black;
         border-radius: 10px;
         height: auto;
-        box-shadow: 0px 0px 50px 0px;
+        box-shadow: 0px 0px 1em 0px;
+        border: none;
         display: flex; justify-content: center; flex-direction: column; align-items: center;
 
         input{
-            height: 45px;
+            height: 3em;
             margin-top: 20px;
             border-radius: .7em;
             width: 80%;
+            border: 1px solid #ccc;
+            padding: .3em;
         }
         input:first-of-type{
             margin-top: 30px;
@@ -126,12 +128,11 @@ div.connexionForm{
 
         button{
             margin-top: 1em;
-            height: 55px;
             background-color: rgb(110, 101, 230);
             color: white;
             border: none;
             border-radius: 10px;
-            padding: .7em;
+            padding: 1em;
             opacity: 0.9;
         }
         button:hover {
