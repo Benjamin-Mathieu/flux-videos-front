@@ -80,10 +80,7 @@ export default {
                 console.log(response.data);
 
                 connection.autoCreateMediaElement = false;
-                // connection.onNumberOfBroadcastViewersUpdated = function(event) {
-                //     console.log('Number of broadcast (', event.broadcastId, ') viewers', event.numberOfBroadcastViewers);
-                // };
-
+                
                 connection.session = {
                     audio: true,
                     // video: true,
