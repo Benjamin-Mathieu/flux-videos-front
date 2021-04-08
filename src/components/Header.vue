@@ -112,8 +112,8 @@ export default {
           connection.session = {
               audio: true,
               data: true,
-              // video: true,
-              screen: true,
+              video: true,
+              //screen: true,
               oneway: true
           };
           connection.socketMessageEvent = 'screen-sharing';
