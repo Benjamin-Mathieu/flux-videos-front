@@ -62,8 +62,7 @@ export default {
                 let video = event.mediaElement;
                 let stream = document.querySelector(".stream").appendChild(video);
                 stream.classList.add("stream");
-            }; 
-
+            };
 
             (function reCheckRoomPresence() {
                 connection.checkPresence(roomid, function(isRoomExist) {
