@@ -106,18 +106,17 @@ export default {
             })
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-
-                navigator.mediaDevices.getUserMedia({audio:true, screen: true})
+                console.log('getUserMedia supported.');
+                navigator.mediaDevices.getUserMedia({audio: true, screen :true})
                 .then(stream => {
                     this.stream = stream;
-                    
                     const mediaStream = new MediaStream(stream);
                     const video = document.querySelector('video');
                     video.srcObject = mediaStream;
 
-                    const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
+                    const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm", audioBitsPerSecond: 12800, videoBitsPerSecond: 200000});
                     this.recorder = mediaRecorder;
-                    
+                    console.log(this.recorder);
                     mediaRecorder.ondataavailable = e => {
                         this.recordedChunks.push(e.data);
                     }
@@ -141,11 +140,13 @@ export default {
 
             // close socket.io connection
             connection.closeSocket();
+
             console.log(this.streamArray['id'])
             
             api.delete('/stream/'+this.streamArray['id']).then(response=>
             {
                 alert('le stream est stop')
+                this.downloadStream();
                 this.$router.push('/');
             }).catch(error=>{
                 alert(error.response.data.message)
@@ -155,11 +156,13 @@ export default {
         {
             this.recorder.stop();
             this.stream.getTracks().forEach(track => { track.stop(); });
-            let blob = new Blob(this.recordedChunks, {type: "video/mpeg"});
+            let blob = new Blob(this.recordedChunks, {type: "video/webm"});
             let url =  URL.createObjectURL(blob);
             console.log(blob);
+            console.log(this.streamArray)
+            console.log(this.streamArray['id'])
             const data = new FormData()
-            data.append('title','lol.mpeg')
+            data.append('status',this.streamArray.visibility)
             data.append('data',blob)
             api.post('/video',data
             ).then(response=>
