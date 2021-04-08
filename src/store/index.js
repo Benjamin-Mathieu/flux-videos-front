@@ -16,9 +16,12 @@ export default createStore({
     UserCo : false,
   },
   mutations: {
-    setStreams(state,streams_public, streams_urgency)
+    setPublicStreams(state,streams_public)
     {
       state.streams_public= streams_public;
+    },
+    setUrgencyStreams(state, streams_urgency)
+    {
       state.streams_urgency= streams_urgency;
     },
     setVideos(state,videos)

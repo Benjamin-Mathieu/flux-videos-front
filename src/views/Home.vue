@@ -48,6 +48,15 @@ export default {
     .public-streams div {
       display: flex; justify-content: center; align-items: center;
     }
+
+    .urgent-streams {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 1.5em;
+    }
+    .urgent-streams div {
+      display: flex; justify-content: center; align-items: center;
+    }
   }
   
 </style>
