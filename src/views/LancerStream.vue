@@ -24,8 +24,8 @@
         <div class="btnStream">
             <button class="StopStream" @click="stopStream">Arreter le stream</button>
             <button class="Download" @click="downloadStream">Download</button>
-            <p v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
         </div>
+        <p class="linkStream" v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
         
         <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
     </div>
@@ -101,8 +101,8 @@ export default {
                 connection.session = {
                     audio: true,
                     data: true,
-                    // video: true,
-                    screen: true,
+                    video: true,
+                    //screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -111,7 +111,11 @@ export default {
                     OfferToReceiveVideo: true
                 }
                 let roomid = response.data.id;
-                this.url = window.location.href + "/" + roomid;
+                console.log(this.checkbox_private + "inchalla")
+                if(this.checkbox_private == true){
+                    this.url = window.location.href + "/" + roomid;
+                }
+                
                 this.roomid  =roomid;
                 connection.open(roomid);
                 console.log(connection)
@@ -123,7 +127,7 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
-                navigator.mediaDevices.getUserMedia({audio: true, screen :true})
+                navigator.mediaDevices.getUserMedia({audio: true, video:true, screen :true})
                 .then(stream => {
                     this.stream = stream;
                     const mediaStream = new MediaStream(stream);
@@ -180,6 +184,7 @@ export default {
             const data = new FormData()
             data.append('status',this.streamArray.visibility)
             data.append('data',blob)
+            data.append('id_stream',this.streamArray['id'])
             api.post('/video',data
             ).then(response=>
             {
@@ -273,8 +278,13 @@ div.btnStream{
         padding: 1em;
         opacity: 0.9;
     }
-
 }
+
+p.linkStream{
+    margin-top:1em;
+    text-align:center;
+}
+
 
 
     

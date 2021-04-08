@@ -15,11 +15,10 @@
                 Se Déconnecter
             </a>
 
-            <router-link to="">
-                <a href="">
-                    <img src="../assets/icons/edit.svg" alt="icons">
-                    Editer profil
-                </a>
+            <br>
+            <router-link to="/Edit-profile">
+            <img src="../assets/icons/edit.svg" alt="">
+            <a href="">Editer profil</a>
             </router-link>
 
             <router-link to="">

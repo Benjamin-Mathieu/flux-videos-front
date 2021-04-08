@@ -134,7 +134,7 @@ export default {
       {
           alert(error.response.data.message)
       })
-      
+
       // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       //     console.log('getUserMedia supported.');
       //     navigator.mediaDevices.getUserMedia({audio: true, screen :true})

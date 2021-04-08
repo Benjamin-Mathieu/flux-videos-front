@@ -11,8 +11,8 @@
         <hr>
         <div class="bio">
             <h3>Biographie :</h3>
-            <p v-if="this.user.descritpion == ''">{{this.user.descritpion}}</p>
-            <p v-else>{{this.user.descritpion}}Pas de description....</p>
+            <p v-if="this.user.descritpion != ''">{{this.user.description}}</p>
+            <p v-else>Pas de description....</p>
         </div>
         <hr>
         <div class="social-media">
@@ -41,6 +41,7 @@ export default {
                 api.get("user/"+this.$route.params.id).then(response => {              
                     console.log(response.data.user);
                     this.user = response.data.user;
+                    console.log(this.user.description)
                 }).catch(error => {
                     console.error(error.response.data.message)
                 })
