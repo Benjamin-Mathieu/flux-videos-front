@@ -56,6 +56,12 @@ const routes = [
       import("../views/UserProfile.vue")
   },
   {
+    path: "/video/:id",
+    name: "video",
+    component: () =>
+      import("../views/Video.vue")
+  },
+  {
     path: "/Edit-profile",
     name: "edit-profile",
     component: () =>

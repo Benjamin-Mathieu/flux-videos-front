@@ -14,11 +14,16 @@ export default createStore({
     videos: [],
     token : false,
     UserCo : false,
+    video : [],
   },
   mutations: {
     setPublicStreams(state,streams_public)
     {
       state.streams_public= streams_public;
+    },
+    setUserVideo(state, video)
+    {
+      state.video = video;
     },
     setUrgencyStreams(state, streams_urgency)
     {
