@@ -7,7 +7,9 @@
                 <img v-if="this.stream.anonymous == 0" class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/'+this.creator.mail+'.svg'" alt="Avatar" width="20px">
                 <img v-else class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/imAnAnonymeUserIncroyable.svg'" alt="Avatar" width="20px">
                 <div>
-                    <h3 v-if="this.stream.anonymous == 0">{{this.creator.username}}</h3>
+                    <router-link v-if="this.stream.anonymous == 0" :to="{name:'profile',params:{id:this.creator.id}}">
+                        <h3 >{{this.creator.username}}</h3>
+                    </router-link>
                     <h3 v-else>Anonymous User</h3>
                     <button class="subscribeStreamer" @click="subscribeStreamer"><img src="../assets/icons/heart.svg" alt="like-button"></button>
                     <p v-if="this.stream.anonymous == 0">{{this.creator.descritpion}}</p>
@@ -25,6 +27,8 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import icon from '../../node_modules/leaflet/dist/images/marker-icon.png';
+
 
 var connection = new RTCMultiConnection();
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
@@ -81,17 +85,26 @@ export default {
                 let latitude = response.data.latitude;
                 let longitude = response.data.longitude;
                 console.log(latitude, longitude);
-                let map = L.map("map").setView([latitude, longitude], 15);
+                let map = L.map("map").setView([latitude, longitude], 17);
                 console.log(response.data);
                 this.creator = response.data.creator;
                 this.stream = response.data;
                 let openStreetMapLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors',
-                    maxZoom: 50
+                        attribution: '© OpenStreetMap contributors',
+                        maxZoom: 100,
+                        tileSize: 512,
+                        zoomOffset: -1
                     });
 
-                let marker = L.marker([latitude, longitude]).addTo(map);
-                marker.bindPopup("<b>Lieu du stream</b>").openPopup();
+                let DefaultIcon = L.icon({
+                        iconUrl: icon,
+                        iconSize:   [30, 50], // size of the icon
+                        iconAnchor: [15, 50]
+                    });
+                L.Marker.prototype.options.icon = DefaultIcon;
+
+
+                L.marker([latitude, longitude]).addTo(map);
                 map.addLayer(openStreetMapLayer);
 
             }).catch(error=>

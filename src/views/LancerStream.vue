@@ -206,7 +206,7 @@ div.FormLancerStream{
 
         #stream-name {
             @media screen and (min-width:450px) and(max-width: 600px){
-                width: 100%;
+                width: 70%;
             }
 
             width: 70%;
