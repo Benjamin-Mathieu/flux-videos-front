@@ -18,10 +18,11 @@
     </button>
     
     <img v-if="this.$store.state.UserCo" class="icons" src="../assets/icons/notifications_none-white-36dp.svg" alt="notifications"/>
-    <button v-if="this.$store.state.token" @click="toggleSidebarProfil">
+    <button v-if="this.$store.state.token" @click="showSideBarProfile">
       <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil"/>
     </button>
-    <button v-else @click="Connexion">
+
+    <button v-else @click="Connexion" style="background-color: transparent; border: none;">
       <img class="icons" src="../assets/icons/log-out.svg" alt="profil"/>
     </button>
     <SidebarProfil :isOpenProfil="this.isOpenProfil"/>
@@ -80,9 +81,9 @@ export default {
       {
           this.streamArray = response.data
           connection.session = {
-              // audio: true,
-              // video: true,
-              screen: true,
+              audio: true,
+              video: true,
+              //screen: true,
               oneway: true
           };
           connection.socketMessageEvent = 'screen-sharing';
@@ -136,6 +137,8 @@ header {
     background-color: transparent;
     border: none;
   }
+
+
 
   height: 80px;
   background-color: #474747;
