@@ -69,11 +69,6 @@ export default {
                 text-align:center;
                 color: white;
             }
-            @media screen and(max-width: 600px) {
-                p{
-                    color: red;
-                }
-            }
         }
         div.btn{
             
@@ -82,6 +77,11 @@ export default {
             }
             a{
                 color:white;
+            }
+            @media screen and(max-width: 600px) {
+                a{
+                    font-size: 11px;
+                }
             }
         }
     }

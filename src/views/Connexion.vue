@@ -151,7 +151,7 @@ div.connexionForm{
         }
     }
 }
-@media screen and(max-width: 600px) {
+@media screen and (min-width:450px) and(max-width: 600px) {
     div.connexionForm{
         display: grid;
         grid-template-columns: repeat(3, 1fr);

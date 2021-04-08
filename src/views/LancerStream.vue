@@ -85,7 +85,7 @@ export default {
                     audio: true,
                     video: true,
                     //screen: true,
-                    oneway: true
+                    //oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
                 connection.sdpConstraints.mandatory = {
@@ -106,7 +106,7 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
-                navigator.mediaDevices.getUserMedia({audio:true, video:true, screen: true})
+                navigator.mediaDevices.getUserMedia({audio:true, video:true})
                 .then(stream => {
                     this.stream = stream;
 
@@ -176,7 +176,7 @@ export default {
 
 div.FormLancerStream{
 
-    @media screen and(max-width:600px) {
+    @media screen and (min-width:450px) and(max-width: 600px) {
         width: 70%;
     }
     
@@ -196,6 +196,10 @@ div.FormLancerStream{
         }
 
         #stream-name {
+            @media screen and (min-width:450px) and(max-width: 600px){
+                width: 80%;
+            }
+
             width: 50%;
             padding: .7em;
             margin-bottom: 2em;
@@ -224,8 +228,6 @@ div.FormLancerStream{
         }
 
     }
-
-    
     video {
         width: 300px; height: 300px;
     }
