@@ -7,7 +7,9 @@
                 <img v-if="this.stream.anonymous == 0" class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/'+this.creator.mail+'.svg'" alt="Avatar" width="20px">
                 <img v-else class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/imAnAnonymeUserIncroyable.svg'" alt="Avatar" width="20px">
                 <div>
-                    <h3 v-if="this.stream.anonymous == 0">{{this.creator.username}}</h3>
+                    <router-link v-if="this.stream.anonymous == 0" :to="{name:'profile',params:{id:this.creator.id}}">
+                        <h3 >{{this.creator.username}}</h3>
+                    </router-link>
                     <h3 v-else>Anonymous User</h3>
                     <button class="subscribeStreamer" @click="subscribeStreamer"><img src="../assets/icons/heart.svg" alt="like-button"></button>
                     <p v-if="this.stream.anonymous == 0">{{this.creator.descritpion}}</p>
