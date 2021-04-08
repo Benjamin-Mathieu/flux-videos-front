@@ -163,7 +163,7 @@ export default {
             {
                 alert('le stream est stop')
                 this.downloadStream();
-                this.$router.push('/');
+                this.$router.push('/video');
             }).catch(error=>{
                 alert(error.response.data.message)
             })
