@@ -19,10 +19,15 @@
         </form>
     </div>
     <div class="emitter-options" v-else>
-        <video autoplay></video>
-        <button @click="stopStream">Arreter le stream</button>
-        <button @click="downloadStream">Download</button>
-        <p v-if="urlStream != ''">Lien du stream : <a :href="urlStream">{{urlStream}}</a></p>
+
+        <video class="video-stream" autoplay></video>
+        <div class="btnStream">
+            <button class="StopStream" @click="stopStream">Arreter le stream</button>
+            <button class="Download" @click="downloadStream">Download</button>
+            <p v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
+        </div>
+        
+        <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
     </div>
 </template>
 
@@ -45,7 +50,7 @@ export default {
             recordedChunks : [],
             streamArray : [],
             roomid : "",
-            urlStream : ""
+            url: "",
         }
     },
     created() {
@@ -58,10 +63,10 @@ export default {
     {
         startStream()
         {
-            let username;
+            let username
             if(this.$store.state.UserCo == false){
                 username = null;
-            } else{
+            }else{
                 username = this.$store.state.UserCo.username;
             }
             api.post('stream',
@@ -73,12 +78,10 @@ export default {
                 username: username
             }).then(response =>
             {
+                connection.autoCreateMediaElement = false;
                 this.formulaire = false
                 this.streamArray = response.data
                 console.log(response.data);
-
-                connection.autoCreateMediaElement = false;
-                
                 connection.session = {
                     audio: true,
                     data: true,
@@ -91,30 +94,26 @@ export default {
                     OfferToReceiveAudio: true,
                     OfferToReceiveVideo: true
                 }
-
                 let roomid = response.data.id;
+                this.url = window.location.href + "/" + roomid;
                 this.roomid  =roomid;
                 connection.open(roomid);
-                console.log(connection);
-
-                this.urlStream = window.location.href + "/" + this.roomid;
-
-                this.emitter.emit('charger-streams');
-
+                console.log(connection)
+                this.emitter.emit('charger-streams')
             }).catch(error=>
             {
                 alert(error.response.data.message)
-            });
+            })
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
                 navigator.mediaDevices.getUserMedia({audio:true, screen: true})
                 .then(stream => {
                     this.stream = stream;
-
+                    
                     const mediaStream = new MediaStream(stream);
-                    let video = document.querySelector('video');
-                    video.src = mediaStream;
+                    const video = document.querySelector('video');
+                    video.srcObject = mediaStream;
 
                     const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
                     this.recorder = mediaRecorder;
@@ -222,11 +221,42 @@ div.FormLancerStream{
 
     }
 
-    
-    video {
-        width: 300px; height: 300px;
+}
+.video-stream {
+    display:block;
+    margin:auto;
+    margin-top:30px;
+    width: 50%;
+}
+
+div.btnStream{
+    margin: auto;
+    width: fit-content;
+    .StopStream{
+        margin: auto;
+        margin-top: 1em;
+        margin-right: 30px;
+        background-color: #ff2828;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 1em;
+        opacity: 0.9;
+    }
+
+    .Download{
+        margin: auto;
+        margin-top: 1em;
+        background-color: rgb(110, 101, 230);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 1em;
+        opacity: 0.9;
     }
 
 }
+
+
     
 </style>
