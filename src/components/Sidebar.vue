@@ -60,10 +60,23 @@ export default {
 .sidebar-toggled-of {
   height : 0px;
   transition: height 0.25s ease-in;
+  a{
+    display: none;
+  }
+  .icons{
+    display: none;
+  }
 }
 
 .sidebar-toggled-on {
   height : 300px;
   transition: height 0.25s ease-in;
+}
+
+@media screen and (min-width:450px) and (max-width: 600px) {
+  .sidebar{
+    width: 25%;
+  }
+  
 }
 </style>

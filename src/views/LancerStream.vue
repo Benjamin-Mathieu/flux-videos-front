@@ -1,33 +1,38 @@
 <template>
-    <div class="FormLancerStream" v-if="formulaire">
-        <h1 class="title">Lancer votre stream</h1>
-        <form @submit.prevent="startStream">
-                <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
-                    <div>
-                        <label for="private">Mettre le stream en privé?</label>
-                        <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
-                    </div>
-                    <div>
-                        <label for="anonymous">Anonyme</label>
-                        <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
-                    </div>
-                    <div>
-                        <label for="urgency">Mode urgence</label>
-                        <input @click="getPosition" v-model="checkbox_urgency" type="checkbox" id="urgency">
-                    </div>
-            <button id="startStream" ref="start-button">START</button>
-        </form>
-    </div>
-    <div class="emitter-options" v-else>
+    <div>
+        <div class="FormLancerStream" v-if="formulaire">
+            <h1 class="title">Lancer votre stream</h1>
+            <form @submit.prevent="startStream">
+                <div class="stream-name">
+                    <label for="stream-name">Titre du stream: </label>
+                    <br>
+                    <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
+                </div>
+                
+                <div class="private-stream">
+                    <label for="private">Mettre le stream en privé?</label>
+                    <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
+                </div>
+                
+                <div class="ano-stream">
+                    <label for="anonymous">Anonyme</label>
+                    <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
+                </div>
 
-        <video class="video-stream" autoplay></video>
-        <div class="btnStream">
-            <button class="StopStream" @click="stopStream">Arreter le stream</button>
-            <button class="Download" @click="downloadStream">Download</button>
-            <p v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
+                <div class="urgency-stream">
+                    <label for="urgency">Mode urgence</label>
+                    <input v-model="checkbox_urgency" type="checkbox" id="urgency">
+                </div>
+
+                <button class="startStream" ref="start-button">START</button>
+            </form>
         </div>
-        
-        <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
+        <div v-else>
+            <button @click="stopStream">Arreter le stream</button>
+            <button @click="downloadStream">Download</button>
+            <video src="" autoplay></video>
+        </div>
+
     </div>
 </template>
 
@@ -35,8 +40,6 @@
 var connection = new RTCMultiConnection();
 // this line is VERY_important
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
-
-let gps = [];
 
 export default {
     data()
@@ -61,37 +64,23 @@ export default {
             this.stopStream();
         }, false);
     },
-    mounted() {
-        var startPos;
-        var geoSuccess = (position) => {
-            startPos = position;
-            let latitude = startPos.coords.latitude;
-            let longitude = startPos.coords.longitude;
-            gps.push(latitude, longitude);
-        };
-        console.log(gps);
-        navigator.geolocation.getCurrentPosition(geoSuccess);
-    },
     methods:
     {
         startStream()
         {
-            let username;
+            let username
             if(this.$store.state.UserCo == false){
                 username = null;
             }else{
                 username = this.$store.state.UserCo.username;
             }
-
             api.post('stream',
             {
                 title:this.title,
                 visibility: this.checkbox_private,
                 anonymous: this.checkbox_anonymous,
                 urgency: this.checkbox_urgency,
-                username: username,
-                latitude: gps[0],
-                longitude: gps[1]
+                username: username
             }).then(response =>
             {
                 connection.autoCreateMediaElement = false;
@@ -196,6 +185,11 @@ export default {
 <style lang="scss" scoped>
 
 div.FormLancerStream{
+
+    @media screen and (min-width:450px) and(max-width: 600px) {
+        width: 70%;
+    }
+    
     width: 50%;
     padding: 1em;
     margin: auto;
@@ -212,7 +206,11 @@ div.FormLancerStream{
         }
 
         #stream-name {
-            width: 50%;
+            @media screen and (min-width:450px) and(max-width: 600px){
+                width: 70%;
+            }
+
+            width: 70%;
             padding: .7em;
             margin-bottom: 2em;
 

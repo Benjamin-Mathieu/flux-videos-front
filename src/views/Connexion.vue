@@ -62,10 +62,8 @@ export default {
                     alert("Veuillez saisir le bon login et password");
                 })
             }
-
         }
     },
-
 }
 </script>
 
@@ -74,15 +72,17 @@ export default {
 
 div.connexionForm{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     width: 80%;
     margin: auto;
-    margin-top: 10% ;
-    
+    margin-top: 10%;
 
     & div.content{
         width: 70%;
         margin: auto;
+        grid-column-start: 1;
+        grid-column-end: 5;
+        
         img{
             display: block;
             margin: auto;
@@ -109,7 +109,8 @@ div.connexionForm{
         box-shadow: 0px 0px 1em 0px;
         border: none;
         display: flex; justify-content: center; flex-direction: column; align-items: center;
-
+        grid-column-start: 6;
+        grid-column-end: 11;
         input{
             height: 3em;
             margin-top: 20px;
@@ -149,6 +150,26 @@ div.connexionForm{
             margin-bottom: 30px;
         }
     }
+}
+@media screen and (min-width:450px) and(max-width: 600px) {
+    div.connexionForm{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 80%;
+        margin: auto;
+        //margin-top: 10%;
+
+        & div.content{
+            grid-column-start: 1;
+            grid-column-end: 4;
+        }
+        & div.form-content{
+            grid-column-start: 1;
+            grid-column-end: 4;
+            margin: auto;
+            margin-top: 10%;
+        }
+    }       
 }
     
 </style>

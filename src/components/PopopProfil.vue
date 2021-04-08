@@ -27,7 +27,6 @@
             </router-link>
         </div>
     </div>
-
 </template>
 
 <script>
@@ -52,6 +51,9 @@ export default {
         right: 0%;
         width: 250px;
         opacity: 0.9;
+        @media screen and (min-width:450px) and(max-width: 600px) {
+            margin-top: 310px;
+        }
 
         div.img{
             border: 1px solid black;
@@ -66,7 +68,6 @@ export default {
                 margin: auto;
             }
         }
-
         div.information{
             margin: 0.3em 0;
             p{
@@ -90,14 +91,22 @@ export default {
             > * {
                 margin-bottom: .3em;
             }
+            @media screen and (min-width:450px) and(max-width: 600px) {
+                a{
+                    font-size: 11px;
+                }
+            }
         }
     }
 
-
+    @media screen and (min-width:450px) and(max-width: 600px) {
+        div.sidebarProfil{
+            width: 25%;
+        }
+    }
 div.sidebarProfil-toggled-of{
     display: block;
 }
 
-    
 </style>
 
