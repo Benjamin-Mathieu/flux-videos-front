@@ -48,7 +48,7 @@ export default {
 
     div.sidebarProfil{
         background-color: #474747;
-        margin-top: 390px;
+        margin-top: 389.2px;
         position: absolute;
         right: 0%;
         width: 250px;
