@@ -10,20 +10,21 @@
         </div>
         <hr>
         <div class="btn">
-            <a @click="Disconected">
-                <img src="../assets/icons/log-out.svg" alt="">
-                <a href="">Se Déconnecter</a>
+            <a href="" @click="Disconected">
+                <img src="../assets/icons/log-out.svg" alt="icons">
+                Se Déconnecter
             </a>
 
-            <br>
             <router-link to="">
-            <img src="../assets/icons/edit.svg" alt="">
-            <a href="">Editer profil</a>
+                <a href="">
+                    <img src="../assets/icons/edit.svg" alt="icons">
+                    Editer profil
+                </a>
             </router-link>
-            <br>
+
             <router-link to="">
-            <img src="../assets/icons/video.svg" alt="">
-            <a href="">Mes vidéos</a>
+                <img src="../assets/icons/video.svg" alt="icons">
+                Mes vidéos
             </router-link>
         </div>
     </div>
@@ -46,10 +47,12 @@ export default {
 
     div.sidebarProfil{
         background-color: #474747;
-        margin-top:300px;
+        margin-top: 389.2px;
         position: absolute;
         right: 0%;
-        width: 10%;
+        width: 250px;
+        opacity: 0.9;
+
         div.img{
             border: 1px solid black;
             border-radius: 100% ;
@@ -61,27 +64,30 @@ export default {
                 display: block;
                 width: 100%;
                 margin: auto;
-
             }
         }
         div.information{
+            margin: 0.3em 0;
             p{
                 text-align:center;
                 color: white;
             }
         }
         div.btn{
-            
+            margin: 0.3em 0; display: flex; flex-direction: column;
             img{
-                margin-left:2%;
+                margin: 0 .3em;
+                vertical-align: bottom;
             }
             a{
                 color:white;
             }
-            @media screen and(max-width: 600px) {
-                a{
-                    font-size: 11px;
-                }
+            a:hover {
+                background-color: rgba(232, 232, 232, 0.2);
+            }
+
+            > * {
+                margin-bottom: .3em;
             }
         }
     }

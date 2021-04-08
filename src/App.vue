@@ -37,10 +37,10 @@ export default {
           }
           
         });
-        this.$store.commit("setStreams", this.public_stream, this.urgency_stream);
-        console.log("ouiouioui");
-        console.log(this.urgency_stream);
-        //console.log(this.$store.state.streams)
+        this.$store.commit("setPublicStreams", this.public_stream);
+        this.$store.commit("setUrgencyStreams", this.urgency_stream);
+        console.log(this.$store.state.streams_public);
+        console.log(this.$store.state.streams_urgency);
       }).catch(error => {
         console.error(error.response.data.message)
       })

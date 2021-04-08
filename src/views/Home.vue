@@ -1,11 +1,26 @@
 <template>
   <div class="main">
-    <h1>Publiques</h1>
-    <div class="public-streams">
-      <div v-for="stream in $store.state.streams" :key="stream.id">
+    
+    <h1>Urgent</h1>
+    <div v-if="$store.state.streams_urgency.length > 0" class="urgent-streams">
+      <div v-for="stream in $store.state.streams_urgency" :key="stream.id">
         <Stream :stream="stream"/>
       </div>
     </div>
+    <div v-else>
+        <p>Aucun stream urgent pour le moment</p>
+    </div>
+    
+    <h1>Publiques</h1>
+    <div v-if="$store.state.streams_public.length > 0" class="public-streams">
+      <div v-for="stream in $store.state.streams_public" :key="stream.id">
+        <Stream :stream="stream"/>
+      </div>
+    </div>
+    <div v-else>
+        <p>Aucun stream publique pour le moment</p>
+    </div>
+
   </div>
 </template>
 
@@ -45,6 +60,15 @@ export default {
         grid-column-start: 1;
         grid-column-end: 4;
       }
+    }
+
+    .urgent-streams {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 1.5em;
+    }
+    .urgent-streams div {
+      display: flex; justify-content: center; align-items: center;
     }
   }
   

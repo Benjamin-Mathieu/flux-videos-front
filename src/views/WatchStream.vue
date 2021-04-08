@@ -18,6 +18,7 @@
             </div>
         </div>
         <div v-if="this.stream.urgency != 0" id="map"></div>
+        <button @click="test">OK</button>
     </div>
 </template>
 
@@ -25,6 +26,8 @@
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
+var connection = new RTCMultiConnection();
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
 export default {
     data() {
@@ -48,9 +51,7 @@ export default {
         {
             let roomid = this.$route.params.id
             console.log(roomid)
-            var connection = new RTCMultiConnection();
-            // this line is VERY_important
-            connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+            
             connection.session = {
                 audio: true,
                 video: true,
@@ -102,7 +103,16 @@ export default {
     methods: {
         subscribeStreamer() {
             alert('Like');
-        }
+        },
+        // test() {
+        //     let users = [];
+        //     connection.getAllParticipants().forEach(function(participantId) {
+        //             var user = connection.peers[participantId];
+
+        //             users.push(user);
+        //         });
+        //         console.log(users.length);
+        // }
     }
 }
 </script>
