@@ -1,28 +1,38 @@
 <template>
-    <div class="FormLancerStream" v-if="formulaire">
-        <h1 class="title">Lancer votre stream</h1>
-        <form @submit.prevent="startStream">
-                <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
-                    <div>
-                        <label for="private">Mettre le stream en privé?</label>
-                        <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
-                    </div>
-                    <div>
-                        <label for="anonymous">Anonyme</label>
-                        <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
-                    </div>
-                    <div>
-                        <label for="urgency">Mode urgence</label>
-                        <input v-model="checkbox_urgency" type="checkbox" id="urgency">
-                    </div>
-            <button id="startStream" ref="start-button">START</button>
-        </form>
-    </div>
-    <div class="emitter-options" v-else>
-        <video autoplay></video>
-        <button @click="stopStream">Arreter le stream</button>
-        <button @click="downloadStream">Download</button>
-        <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
+    <div>
+        <div class="FormLancerStream" v-if="formulaire">
+            <h1 class="title">Lancer votre stream</h1>
+            <form @submit.prevent="startStream">
+                <div class="stream-name">
+                    <label for="stream-name">Titre du stream: </label>
+                    <br>
+                    <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
+                </div>
+                
+                <div class="private-stream">
+                    <label for="private">Mettre le stream en privé?</label>
+                    <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
+                </div>
+                
+                <div class="ano-stream">
+                    <label for="anonymous">Anonyme</label>
+                    <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
+                </div>
+
+                <div class="urgency-stream">
+                    <label for="urgency">Mode urgence</label>
+                    <input v-model="checkbox_urgency" type="checkbox" id="urgency">
+                </div>
+
+                <button class="startStream" ref="start-button">START</button>
+            </form>
+        </div>
+        <div v-else>
+            <button @click="stopStream">Arreter le stream</button>
+            <button @click="downloadStream">Download</button>
+            <video src="" autoplay></video>
+        </div>
+
     </div>
 </template>
 
@@ -75,6 +85,7 @@ export default {
                 username: username
             }).then(response =>
             {
+                connection.autoCreateMediaElement = false;
                 this.formulaire = false
                 this.streamArray = response.data
                 console.log(response.data);
