@@ -23,11 +23,13 @@
                     <label for="urgency">Mode urgence</label>
                     <input v-model="checkbox_urgency" type="checkbox" id="urgency">
                 </div>
-
+                <button id="startStream" ref="start-button">START</button>
+            </form>
+        </div>
         <video class="video-stream" autoplay></video>
         <div class="btnStream">
             <button class="StopStream" @click="stopStream">Arreter le stream</button>
-            <button class="Download" @click="downloadStream">Download</button>
+            <!-- <button class="Download" @click="downloadStream">Download</button> -->
         </div>
         <p class="linkStream" v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
         
