@@ -103,7 +103,6 @@ export default {
                 // Success callback
                 .then(stream => {
                     this.stream = stream;
-                    console.log("tamere")
                     const mediaStream = new MediaStream(stream);
                     const video = document.querySelector('video');
                     video.srcObject = mediaStream;
@@ -136,11 +135,11 @@ export default {
             connection.closeSocket();
 
             console.log(this.streamArray['id'])
-            this.downloadStream();
             // windows en cas de ragequit
             api.delete('/stream/'+this.streamArray['id']).then(response=>
             {
                 alert('le stream est stop')
+                this.downloadStream();
                 this.$router.push('/');
             }).catch(error=>{
                 alert(error.response.data.message)
@@ -150,11 +149,13 @@ export default {
         {
             this.recorder.stop();
             this.stream.getTracks().forEach(track => { track.stop(); });
-            let blob = new Blob(this.recordedChunks, {type: "video/mpeg"});
+            let blob = new Blob(this.recordedChunks, {type: "video/webm"});
             let url =  URL.createObjectURL(blob);
             console.log(blob);
+            console.log(this.streamArray)
+            console.log(this.streamArray['id'])
             const data = new FormData()
-            data.append('title','lol.mpeg')
+            data.append('status',this.streamArray.visibility)
             data.append('data',blob)
             api.post('/video',data
             ).then(response=>
@@ -163,14 +164,6 @@ export default {
             }).catch(error=>{
                 alert(error.response.data.message)
             })
-    /*      
-            let a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            a.href = url;
-            a.download = this.clipName + '.mpeg';
-            a.click();
-            setTimeout(function() { URL.revokeObjectURL(url); }, 100);*/
         }
     }//method
 }
