@@ -62,10 +62,8 @@ export default {
                     alert("Veuillez saisir le bon login et password");
                 })
             }
-
         }
     },
-
 }
 </script>
 
@@ -111,7 +109,8 @@ div.connexionForm{
         box-shadow: 0px 0px 1em 0px;
         border: none;
         display: flex; justify-content: center; flex-direction: column; align-items: center;
-
+        grid-column-start: 6;
+        grid-column-end: 11;
         input{
             height: 3em;
             margin-top: 20px;

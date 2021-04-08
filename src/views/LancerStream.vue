@@ -22,7 +22,7 @@
         <button @click="stopStream">Arreter le stream</button>
         <button @click="recordStream">Record</button>
         <button @click="downloadStream">Download</button>
-        <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p>
+        <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
     </div>
 </template>
 

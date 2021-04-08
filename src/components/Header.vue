@@ -126,6 +126,7 @@ export default {
 
 <style lang="scss">
 header {
+  
   button:first-of-type{
     background-color: transparent;
     border: none;

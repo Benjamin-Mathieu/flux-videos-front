@@ -25,6 +25,9 @@ export default {
 
   .main {
     width: 90%; margin: 0 auto;
+    h1{
+      text-align: center;
+    }
     .public-streams {
       display: grid;
       grid-template-columns: auto auto;
