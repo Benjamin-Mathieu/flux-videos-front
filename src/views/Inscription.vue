@@ -62,6 +62,11 @@ export default {
 <style lang="scss">
 
 .inscription-form{
+
+    @media screen and(max-width:600px) {
+        width: 70%;
+    }
+    
     width: 30%;
     margin: auto;
     margin-top: 80px;
@@ -70,7 +75,7 @@ export default {
     padding: 1em;
 
     form {
-         display: flex; justify-content: center; align-items: center; flex-direction: column;
+        display: flex; justify-content: center; align-items: center; flex-direction: column;
 
         span {
             color: #ff0033;

@@ -75,7 +75,7 @@ div.connexionForm{
     grid-template-columns: repeat(10, 1fr);
     width: 80%;
     margin: auto;
-    margin-top: 10% ;
+    margin-top: 10%;
 
     & div.content{
         width: 70%;
@@ -150,6 +150,26 @@ div.connexionForm{
             margin-bottom: 30px;
         }
     }
+}
+@media screen and(max-width: 600px) {
+    div.connexionForm{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 80%;
+        margin: auto;
+        //margin-top: 10%;
+
+        & div.content{
+            grid-column-start: 1;
+            grid-column-end: 4;
+        }
+        & div.form-content{
+            grid-column-start: 1;
+            grid-column-end: 4;
+            margin: auto;
+            margin-top: 10%;
+        }
+    }       
 }
     
 </style>

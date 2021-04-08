@@ -64,11 +64,15 @@ export default {
 
             }
         }
-
         div.information{
             p{
                 text-align:center;
                 color: white;
+            }
+            @media screen and(max-width: 600px) {
+                p{
+                    color: red;
+                }
             }
         }
         div.btn{
@@ -82,7 +86,11 @@ export default {
         }
     }
 
-
+    @media screen and(max-width: 600px) {
+        div.sidebarProfil{
+            width: 25%;
+        }
+    }
 div.sidebarProfil-toggled-of{
     display: block;
 }

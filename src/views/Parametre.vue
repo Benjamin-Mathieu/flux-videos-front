@@ -26,6 +26,11 @@ export default {
 <style lang="scss">
 
   .settings-form{
+
+    @media screen and(max-width: 600px) {
+      width: 70%;
+    }
+    
     width: 30%;
     margin: auto;
     margin-top: 80px;

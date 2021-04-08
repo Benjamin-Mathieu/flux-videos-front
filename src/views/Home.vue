@@ -25,6 +25,10 @@ export default {
 
   .main {
     width: 90%; margin: 0 auto;
+    @media screen and(max-width: 600px) {
+      width: 80%;
+      margin: auto;
+    }
     h1{
       text-align: center;
     }
@@ -32,10 +36,18 @@ export default {
       display: grid;
       grid-template-columns: auto auto;
       grid-gap: 1.5em;
+      @media screen and(max-width: 600px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
     .public-streams div {
       display: flex; justify-content: center; align-items: center;
+      @media screen and(max-width: 600px) {
+        grid-column-start: 1;
+        grid-column-end: 4;
+      }
     }
   }
+  
   
 </style>

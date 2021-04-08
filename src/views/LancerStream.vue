@@ -175,6 +175,11 @@ export default {
 <style lang="scss" scoped>
 
 div.FormLancerStream{
+
+    @media screen and(max-width:600px) {
+        width: 70%;
+    }
+    
     width: 50%;
     padding: 1em;
     margin: auto;
