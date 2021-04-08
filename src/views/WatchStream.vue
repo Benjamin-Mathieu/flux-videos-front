@@ -12,7 +12,7 @@
                     </router-link>
                     <h3 v-else>Anonymous User</h3>
                     <button class="subscribeStreamer" @click="subscribeStreamer"><img src="../assets/icons/heart.svg" alt="like-button"></button>
-                    <p v-if="this.stream.anonymous == 0">{{this.creator.descritpion}}</p>
+                    <p v-if="this.stream.anonymous == 0">{{this.creator.description}}</p>
                 </div> 
             </div>
             <div class="social-icons">
@@ -89,6 +89,8 @@ export default {
                 console.log(response.data);
                 this.creator = response.data.creator;
                 this.stream = response.data;
+                console.error("hnezrfjuhngzhunejiglfkzegnheznghje");
+                console.log(this.creator)
                 let openStreetMapLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                         attribution: '© OpenStreetMap contributors',
                         maxZoom: 100,

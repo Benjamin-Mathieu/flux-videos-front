@@ -101,8 +101,8 @@ export default {
                 connection.session = {
                     audio: true,
                     data: true,
-                    // video: true,
-                    screen: true,
+                    video: true,
+                    //screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
@@ -123,7 +123,7 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
-                navigator.mediaDevices.getUserMedia({audio: true, screen :true})
+                navigator.mediaDevices.getUserMedia({audio: true, video:true, screen :true})
                 .then(stream => {
                     this.stream = stream;
                     const mediaStream = new MediaStream(stream);
@@ -180,6 +180,7 @@ export default {
             const data = new FormData()
             data.append('status',this.streamArray.visibility)
             data.append('data',blob)
+            data.append('id_stream',this.streamArray['id'])
             api.post('/video',data
             ).then(response=>
             {
