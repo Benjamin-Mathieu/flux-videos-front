@@ -55,6 +55,7 @@ export default {
             recordedChunks : [],
             streamArray : [],
             roomid : "",
+            url: "",
         }
     },
     created() {
@@ -70,10 +71,10 @@ export default {
     {
         startStream()
         {
-            let username;
+            let username
             if(this.$store.state.UserCo == false){
                 username = null;
-            } else{
+            }else{
                 username = this.$store.state.UserCo.username;
             }
             api.post('stream',
@@ -89,9 +90,6 @@ export default {
                 this.formulaire = false
                 this.streamArray = response.data
                 console.log(response.data);
-
-                connection.autoCreateMediaElement = false;
-                
                 connection.session = {
                     audio: true,
                     video: true,
@@ -103,27 +101,26 @@ export default {
                     OfferToReceiveAudio: false,
                     OfferToReceiveVideo: false
                 }
-                
                 let roomid = response.data.id;
+                this.url = "localhost:8080/stream/" + roomid;
                 this.roomid  =roomid;
                 connection.open(roomid);
                 console.log(connection)
-                this.emitter.emit('charger-streams');
-
+                this.emitter.emit('charger-streams')
             }).catch(error=>
             {
                 alert(error.response.data.message)
-            });
+            })
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 
                 navigator.mediaDevices.getUserMedia({audio:true, video:true})
                 .then(stream => {
                     this.stream = stream;
-
+                    
                     const mediaStream = new MediaStream(stream);
-                    let video = document.querySelector('video');
-                    video.src = mediaStream;
+                    const video = document.querySelector('video');
+                    video.srcObject = mediaStream;
 
                     const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
                     this.recorder = mediaRecorder;
@@ -239,10 +236,43 @@ div.FormLancerStream{
         }
 
     }
-    video {
-        width: 300px; height: 300px;
+
+}
+.video-stream {
+    display:block;
+    margin:auto;
+    margin-top:30px;
+    width: 50%;
+}
+
+div.btnStream{
+    margin: auto;
+    width: fit-content;
+    .StopStream{
+        margin: auto;
+        margin-top: 1em;
+        margin-right: 30px;
+        background-color: #ff2828;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 1em;
+        opacity: 0.9;
+    }
+
+    .Download{
+        margin: auto;
+        margin-top: 1em;
+        background-color: rgb(110, 101, 230);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 1em;
+        opacity: 0.9;
     }
 
 }
+
+
     
 </style>
