@@ -127,7 +127,7 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
-                navigator.mediaDevices.getUserMedia({audio: true, video:true, screen :true})
+                navigator.mediaDevices.getUserMedia({audio: true, video:true})
                 .then(stream => {
                     this.stream = stream;
                     const mediaStream = new MediaStream(stream);
