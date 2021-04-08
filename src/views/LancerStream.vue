@@ -114,7 +114,7 @@ export default {
                     const video = document.querySelector('video');
                     video.srcObject = mediaStream;
 
-                    const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
+                    const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm", audioBitsPerSecond: 12800, videoBitsPerSecond: 200000});
                     this.recorder = mediaRecorder;
                     console.log(this.recorder);
                     mediaRecorder.ondataavailable = e => {
