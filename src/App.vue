@@ -38,7 +38,7 @@ export default {
           
         });
         this.$store.commit("setStreams", this.public_stream, this.urgency_stream);
-        console.log("ouiouioui");
+        console.log(response.data);
         console.log(this.urgency_stream);
         //console.log(this.$store.state.streams)
       }).catch(error => {

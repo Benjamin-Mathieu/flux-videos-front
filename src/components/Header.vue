@@ -71,6 +71,7 @@ export default {
     },
 
     launchUrgencyStream() {
+      connection.autoCreateMediaElement = false;
       api.post('stream',
       {
           title: "Urgent",
