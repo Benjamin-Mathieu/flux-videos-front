@@ -18,6 +18,7 @@
             </div>
         </div>
         <div v-if="this.stream.urgency != 0" id="map"></div>
+        <button @click="test">OK</button>
     </div>
 </template>
 
@@ -102,7 +103,16 @@ export default {
     methods: {
         subscribeStreamer() {
             alert('Like');
-        }
+        },
+        // test() {
+        //     let users = [];
+        //     connection.getAllParticipants().forEach(function(participantId) {
+        //             var user = connection.peers[participantId];
+
+        //             users.push(user);
+        //         });
+        //         console.log(users.length);
+        // }
     }
 }
 </script>

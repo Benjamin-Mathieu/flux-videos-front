@@ -22,7 +22,7 @@
         <video autoplay></video>
         <button @click="stopStream">Arreter le stream</button>
         <button @click="downloadStream">Download</button>
-        <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
+        <p v-if="urlStream != ''">Lien du stream : <a :href="urlStream">{{urlStream}}</a></p>
     </div>
 </template>
 
@@ -45,6 +45,7 @@ export default {
             recordedChunks : [],
             streamArray : [],
             roomid : "",
+            urlStream : ""
         }
     },
     created() {
@@ -52,9 +53,6 @@ export default {
         window.addEventListener('beforeunload', () => {
             this.stopStream();
         }, false);
-    },
-    mounted() {
-        
     },
     methods:
     {
@@ -90,14 +88,17 @@ export default {
                 };
                 connection.socketMessageEvent = 'screen-sharing';
                 connection.sdpConstraints.mandatory = {
-                    OfferToReceiveAudio: false,
-                    OfferToReceiveVideo: false
+                    OfferToReceiveAudio: true,
+                    OfferToReceiveVideo: true
                 }
-                                
+
                 let roomid = response.data.id;
                 this.roomid  =roomid;
                 connection.open(roomid);
-                console.log(connection)
+                console.log(connection);
+
+                this.urlStream = window.location.href + "/" + this.roomid;
+
                 this.emitter.emit('charger-streams');
 
             }).catch(error=>
