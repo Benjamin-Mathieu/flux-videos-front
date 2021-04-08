@@ -10,7 +10,7 @@
         </div>
         <hr>
         <div class="bio">
-            <h3>Biographie :</h3>
+            <h3>Biographie:</h3>
             <p v-if="this.user.descritpion != ''">{{this.user.description}}</p>
             <p v-else>Pas de description....</p>
         </div>
