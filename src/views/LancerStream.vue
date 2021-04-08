@@ -24,8 +24,8 @@
         <div class="btnStream">
             <button class="StopStream" @click="stopStream">Arreter le stream</button>
             <button class="Download" @click="downloadStream">Download</button>
-            <p v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
         </div>
+        <p class="linkStream" v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
         
         <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
     </div>
@@ -111,7 +111,11 @@ export default {
                     OfferToReceiveVideo: true
                 }
                 let roomid = response.data.id;
-                this.url = window.location.href + "/" + roomid;
+                console.log(this.checkbox_private + "inchalla")
+                if(this.checkbox_private == true){
+                    this.url = window.location.href + "/" + roomid;
+                }
+                
                 this.roomid  =roomid;
                 connection.open(roomid);
                 console.log(connection)
@@ -274,8 +278,13 @@ div.btnStream{
         padding: 1em;
         opacity: 0.9;
     }
-
 }
+
+p.linkStream{
+    margin-top:1em;
+    text-align:center;
+}
+
 
 
     
