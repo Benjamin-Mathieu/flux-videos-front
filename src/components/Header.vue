@@ -112,8 +112,8 @@ export default {
           connection.session = {
               audio: true,
               data: true,
-              // video: true,
-              screen: true,
+              video: true,
+              //screen: true,
               oneway: true
           };
           connection.socketMessageEvent = 'screen-sharing';
@@ -134,28 +134,8 @@ export default {
       {
           alert(error.response.data.message)
       })
+      
 
-      // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      //     console.log('getUserMedia supported.');
-      //     navigator.mediaDevices.getUserMedia({audio: true, screen :true})
-      //     .then(stream => {
-      //         this.stream = stream;
-      //         const mediaStream = new MediaStream(stream);
-      //         const video = document.querySelector('video');
-      //         video.srcObject = mediaStream;
-
-      //         const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm", audioBitsPerSecond: 12800, videoBitsPerSecond: 200000});
-      //         this.recorder = mediaRecorder;
-      //         console.log(this.recorder);
-      //         mediaRecorder.ondataavailable = e => {
-      //             this.recordedChunks.push(e.data);
-      //         }
-      //         mediaRecorder.start(100);
-      //         console.log(mediaRecorder.state);
-      //         console.log("recorder started");
-      //     })
-      //     .catch(e => { console.error('getUserMedia() failed: ' + e); });
-      // }
     }
   }
 };
