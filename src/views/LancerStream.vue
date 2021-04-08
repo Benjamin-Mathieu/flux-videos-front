@@ -91,8 +91,8 @@ export default {
                     audio: true,
                     data: true,
                     // video: true,
-                    screen: true,
-                    oneway: true
+                    //screen: true,
+                    //oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
                 connection.sdpConstraints.mandatory = {
@@ -206,10 +206,10 @@ div.FormLancerStream{
 
         #stream-name {
             @media screen and (min-width:450px) and(max-width: 600px){
-                width: 80%;
+                width: 100%;
             }
 
-            width: 50%;
+            width: 70%;
             padding: .7em;
             margin-bottom: 2em;
 
