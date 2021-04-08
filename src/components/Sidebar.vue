@@ -73,9 +73,9 @@ export default {
   transition: height 0.25s ease-in;
 }
 
-@media screen and (min-width:450px) and (max-width: 600px) {
+@media screen and (min-width:320px) and (max-width: 600px) {
   .sidebar{
-    width: 25%;
+    width: 30%;
   }
   
 }

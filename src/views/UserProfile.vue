@@ -55,14 +55,16 @@ export default {
 <style lang="scss">
 
 div.the-profile{
-    width: 50%;
+    width: 60%;
     margin:auto;
     margin-top: 50px;
     border: 1px solid black;
     box-shadow: 0px 0px 1em 0px;
     border-radius: 2%;
     padding: 1.5em;
-
+    @media screen and (min-width:320px) and (max-width:500px) {
+        width: 70%;
+    }
     hr{
         width: 80%;
         margin: auto;
@@ -74,6 +76,8 @@ div.the-profile{
         width: 100%;
         margin:auto;
         margin-top: 50px;
+
+
 
         img.gravatar{
             display: block;
@@ -104,9 +108,6 @@ div.the-profile{
         display: flex;
         justify-content: space-evenly;
     }
-
-
-
 }
 
 

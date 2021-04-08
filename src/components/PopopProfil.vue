@@ -51,7 +51,7 @@ export default {
         right: 0%;
         width: 250px;
         opacity: 0.9;
-        @media screen and (min-width:450px) and(max-width: 600px) {
+        @media screen and (min-width:320px) and(max-width: 600px) {
             margin-top: 310px;
         }
 
@@ -91,7 +91,7 @@ export default {
             > * {
                 margin-bottom: .3em;
             }
-            @media screen and (min-width:450px) and(max-width: 600px) {
+            @media screen and (min-width:320px) and(max-width: 600px) {
                 a{
                     font-size: 11px;
                 }
@@ -99,7 +99,7 @@ export default {
         }
     }
 
-    @media screen and (min-width:450px) and(max-width: 600px) {
+    @media screen and (min-width:320px) and(max-width: 600px) {
         div.sidebarProfil{
             width: 25%;
         }

@@ -200,6 +200,23 @@ export default {
             margin: auto;
         }
 
+        button{
+            width: 10%;
+            height: 50px;
+            color: white;
+            background-color: rgb(25, 12, 214);
+            border: none;
+            border-radius: .3em;
+            opacity: 0.9;
+            
+        }
+        button:hover {
+            cursor: pointer;
+            opacity: 1;
+            transition: .3s ease-in;
+        }
+        
+
         .chat {
 
         }

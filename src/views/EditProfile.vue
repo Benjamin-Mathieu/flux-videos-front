@@ -56,12 +56,15 @@ export default {
 <style lang="scss">
 
 div.form{
-    width: 40%;
+    width: 50%;
     margin: auto;
     margin-top: 80px;
     box-shadow: 0px 0px 1em 0px;
     border-radius: .7em;
     padding: 1em;
+    @media screen and (max-width: 830px) {
+        width: 80%;
+    }
 
     h1{
         text-align: center;
