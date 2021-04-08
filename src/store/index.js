@@ -9,15 +9,17 @@ const vuexLocal = new VuexPersistence({
 export default createStore({
   plugins : [vuexLocal.plugin],
   state: {
-    streams: [],
+    streams_public: [],
+    streams_urgency: [],
     videos: [],
     token : false,
     UserCo : false,
   },
   mutations: {
-    setStreams(state,streams)
+    setStreams(state,streams_public, streams_urgency)
     {
-      state.streams= streams;
+      state.streams_public= streams_public;
+      state.streams_urgency= streams_urgency;
     },
     setVideos(state,videos)
     {
