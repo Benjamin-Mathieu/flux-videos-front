@@ -31,7 +31,7 @@ export default {
     Stream
   },
   mounted() {
-    console.log("userCo", this.$store.state.UserCo);
+    
   },
 }
 </script>

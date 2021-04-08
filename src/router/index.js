@@ -55,6 +55,12 @@ const routes = [
     component: () =>
       import("../views/UserProfile.vue")
   },
+  {
+    path: "/Edit-profile",
+    name: "edit-profile",
+    component: () =>
+      import("../views/EditProfile.vue")
+  },
 ];
 
 const router = createRouter({
