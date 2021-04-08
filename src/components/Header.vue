@@ -37,6 +37,8 @@ import SidebarProfil from "@/components/PopopProfil.vue";
 var connection = new RTCMultiConnection();
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
 
+let gps = [];
+
 export default {
   components: {
     Sidebar,
@@ -53,7 +55,21 @@ export default {
       recorder: "",
       recordedChunks : [],
       streamArray : [],
+      roomid : "",
+      url: "",
     };
+  },
+
+  mounted() {
+    var startPos;
+    var geoSuccess = (position) => {
+        startPos = position;
+        let latitude = startPos.coords.latitude;
+        let longitude = startPos.coords.longitude;
+        gps.push(latitude, longitude);
+    };
+    console.log(gps);
+    navigator.geolocation.getCurrentPosition(geoSuccess);
   },
 
   methods: {
@@ -71,56 +87,75 @@ export default {
     },
 
     launchUrgencyStream() {
-      connection.autoCreateMediaElement = false;
+      let username;
+      if(this.$store.state.UserCo == false){
+          username = null;
+      }else{
+          username = this.$store.state.UserCo.username;
+      }
+
       api.post('stream',
       {
           title: "Urgent",
           visibility: true,
           anonymous: false,
-          urgency: true
+          urgency: true,
+          username: username,
+          latitude: gps[0],
+          longitude: gps[1]
       }).then(response =>
       {
+          connection.autoCreateMediaElement = false;
+          this.formulaire = false
           this.streamArray = response.data
+          console.log(response.data);
           connection.session = {
               audio: true,
-              video: true,
-              //screen: true,
+              data: true,
+              // video: true,
+              screen: true,
               oneway: true
           };
           connection.socketMessageEvent = 'screen-sharing';
           connection.sdpConstraints.mandatory = {
-              OfferToReceiveAudio: false,
-              OfferToReceiveVideo: false
+              OfferToReceiveAudio: true,
+              OfferToReceiveVideo: true
           }
-          let testid = response.data.id;
-          connection.open(testid);
+          let roomid = response.data.id;
+          this.url = window.location.href + "/" + roomid;
+          this.roomid  =roomid;
+          connection.open(roomid);
+          console.log(connection)
+
+          window.open(window.location + "stream/" + this.roomid); //ouvre le stream dans le lien
+
           this.emitter.emit('charger-streams')
       }).catch(error=>
       {
           alert(error.response.data.message)
       })
 
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          console.log('getUserMedia supported.');
+      // if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      //     console.log('getUserMedia supported.');
+      //     navigator.mediaDevices.getUserMedia({audio: true, screen :true})
+      //     .then(stream => {
+      //         this.stream = stream;
+      //         const mediaStream = new MediaStream(stream);
+      //         const video = document.querySelector('video');
+      //         video.srcObject = mediaStream;
 
-          navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
-          .then(stream => {
-              this.stream = stream;
-              
-              const mediaStream = new MediaStream(stream);
-              video.srcObject = mediaStream;
-
-              const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
-              this.recorder = mediaRecorder;
-              
-              mediaRecorder.ondataavailable = e => {
-                  this.recordedChunks.push(e.data);
-              }
-              mediaRecorder.start(100);
-          })
-          .catch(e => { console.error('getUserMedia() failed: ' + e); });
-      }
-        
+      //         const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm", audioBitsPerSecond: 12800, videoBitsPerSecond: 200000});
+      //         this.recorder = mediaRecorder;
+      //         console.log(this.recorder);
+      //         mediaRecorder.ondataavailable = e => {
+      //             this.recordedChunks.push(e.data);
+      //         }
+      //         mediaRecorder.start(100);
+      //         console.log(mediaRecorder.state);
+      //         console.log("recorder started");
+      //     })
+      //     .catch(e => { console.error('getUserMedia() failed: ' + e); });
+      // }
     }
   }
 };

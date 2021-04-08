@@ -24,15 +24,14 @@
                     <input v-model="checkbox_urgency" type="checkbox" id="urgency">
                 </div>
 
-                <button class="startStream" ref="start-button">START</button>
-            </form>
+        <video class="video-stream" autoplay></video>
+        <div class="btnStream">
+            <button class="StopStream" @click="stopStream">Arreter le stream</button>
+            <button class="Download" @click="downloadStream">Download</button>
         </div>
-        <div v-else>
-            <button @click="stopStream">Arreter le stream</button>
-            <button @click="downloadStream">Download</button>
-            <video src="" autoplay></video>
-        </div>
-
+        <p class="linkStream" v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
+        
+        <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
     </div>
 </template>
 
@@ -100,7 +99,11 @@ export default {
                     OfferToReceiveVideo: true
                 }
                 let roomid = response.data.id;
-                this.url = window.location.href + "/" + roomid;
+                console.log(this.checkbox_private + "inchalla")
+                if(this.checkbox_private == true){
+                    this.url = window.location.href + "/" + roomid;
+                }
+                
                 this.roomid  =roomid;
                 connection.open(roomid);
                 console.log(connection)
@@ -152,7 +155,7 @@ export default {
             {
                 alert('le stream est stop')
                 this.downloadStream();
-                this.$router.push('/');
+                this.$router.push('/video');
             }).catch(error=>{
                 alert(error.response.data.message)
             })
@@ -272,8 +275,13 @@ div.btnStream{
         padding: 1em;
         opacity: 0.9;
     }
-
 }
+
+p.linkStream{
+    margin-top:1em;
+    text-align:center;
+}
+
 
 
     
