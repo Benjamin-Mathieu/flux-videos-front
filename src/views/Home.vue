@@ -48,7 +48,7 @@ export default {
     }
     .public-streams {
       display: grid;
-      grid-template-columns: auto auto;
+      grid-template-columns: auto auto auto;
       grid-gap: 1.5em;
       @media screen and (min-width:450px) and(max-width: 600px) {
         grid-template-columns: repeat(3, 1fr);
