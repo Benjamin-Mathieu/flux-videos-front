@@ -1,42 +1,48 @@
 <template>
   <Header />
-  <div class="main">
-    <Sidebar />
-  </div>
-
-  <div class="main2">
-    <SidebarProfil/>
-  </div>
   <router-view />
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
-import Sidebar from "@/components/Sidebar.vue";
-import SidebarProfil from "@/components/PopopProfil.vue";
-
 
 export default {
   components: {
     Header,
-    Sidebar,
-    SidebarProfil
+  },
 
+  data() {
+    return {
+      public_stream : [],
+      urgency_stream: [],
+    }
   },
 
   mounted() {
     this.chargerStreams();
-    this.emitter.on("charger-streams", this.chargerStreams)
+    this.emitter.on("charger-streams", this.chargerStreams);
   },
 
   methods: {
     chargerStreams() {
       api.get("home").then(response => {
-        this.$store.commit("setStreams", response.data.streams);
-        console.log(response.data.streams)
-        console.log(this.$store.state.streams)
+        
+        response.data.streams.forEach(stream => {
+
+          if(stream.urgency == 0){
+            this.public_stream.push(stream);
+          }else{
+            
+            this.urgency_stream.push(stream);
+          }
+          
+        });
+        this.$store.commit("setPublicStreams", this.public_stream);
+        this.$store.commit("setUrgencyStreams", this.urgency_stream);
+        console.log(this.$store.state.streams_public);
+        console.log(this.$store.state.streams_urgency);
       }).catch(error => {
-        console.log(error.response.data.message)
+        console.error(error.response.data.message)
       })
     }
   }
@@ -57,7 +63,6 @@ export default {
   height: 100vh;
 
   a {
-    font-weight: bold;
     text-decoration: none;
   }
 

@@ -1,39 +1,33 @@
 <template>
-    <div>
-        <div class="FormLancerStream" v-if="formulaire">
-            <h1 class="title">Lancer votre stream</h1>
-            <form @submit.prevent="startStream">
-                <div class="stream-name">
-                    <label for="stream-name">Titre du stream: </label>
-                    <br>
-                    <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
-                </div>
-                
-                <div class="private-stream">
-                    <label for="private">Mettre le stream en privé?</label>
-                    <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
-                </div>
-                
-                <div class="ano-stream">
-                    <label for="anonymous">Anonyme</label>
-                    <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
-                </div>
+    <div class="FormLancerStream" v-if="formulaire">
+        <h1 class="title">Lancer votre stream</h1>
+        <form @submit.prevent="startStream">
+                <input v-model="title" type="text" id="stream-name" placeholder="Titre du stream">
+                    <div>
+                        <label for="private">Mettre le stream en privé?</label>
+                        <input v-model="checkbox_private" type="checkbox" id="private" name="visibility">
+                    </div>
+                    <div>
+                        <label for="anonymous">Anonyme</label>
+                        <input v-model="checkbox_anonymous" type="checkbox" id="anonymous">
+                    </div>
+                    <div>
+                        <label for="urgency">Mode urgence</label>
+                        <input @click="getPosition" v-model="checkbox_urgency" type="checkbox" id="urgency">
+                    </div>
+            <button id="startStream" ref="start-button">START</button>
+        </form>
+    </div>
+    <div class="emitter-options" v-else>
 
-                <div class="urgency-stream">
-                    <label for="urgency">Mode urgence</label>
-                    <input v-model="checkbox_urgency" type="checkbox" id="urgency">
-                </div>
-
-                <button class="startStream" ref="start-button">START</button>
-            </form>
+        <video class="video-stream" autoplay></video>
+        <div class="btnStream">
+            <button class="StopStream" @click="stopStream">Arreter le stream</button>
+            <button class="Download" @click="downloadStream">Download</button>
+            <p v-if="url != ''">Lien du stream : <a :href="url">{{url}}</a></p>
         </div>
-        <div v-else>
-            <button @click="stopStream">Arreter le stream</button>
-            <button @click="recordStream">Record</button>
-            <button @click="downloadStream">Download</button>
-            <video></video>
-        </div>
-
+        
+        <!-- <p v-if="this.checkbox_private == true">Lien du stream : localhost:8080/stream/{{this.roomid}}</p> -->
     </div>
 </template>
 
@@ -41,6 +35,8 @@
 var connection = new RTCMultiConnection();
 // this line is VERY_important
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+let gps = [];
 
 export default {
     data()
@@ -54,41 +50,70 @@ export default {
             stream : "",
             recorder: "",
             recordedChunks : [],
-            streamArray : []
+            streamArray : [],
+            roomid : "",
+            url: "",
         }
     },
-    mounted()
-    {
-
+    created() {
+        // Appel de la fonction stopStream lorsque le streamer ferme l'onglet ou la page
+        window.addEventListener('beforeunload', () => {
+            this.stopStream();
+        }, false);
+    },
+    mounted() {
+        var startPos;
+        var geoSuccess = (position) => {
+            startPos = position;
+            let latitude = startPos.coords.latitude;
+            let longitude = startPos.coords.longitude;
+            gps.push(latitude, longitude);
+        };
+        console.log(gps);
+        navigator.geolocation.getCurrentPosition(geoSuccess);
     },
     methods:
     {
         startStream()
         {
+            let username;
+            if(this.$store.state.UserCo == false){
+                username = null;
+            }else{
+                username = this.$store.state.UserCo.username;
+            }
+
             api.post('stream',
             {
                 title:this.title,
                 visibility: this.checkbox_private,
                 anonymous: this.checkbox_anonymous,
-                urgency: this.checkbox_urgency
+                urgency: this.checkbox_urgency,
+                username: username,
+                latitude: gps[0],
+                longitude: gps[1]
             }).then(response =>
             {
+                connection.autoCreateMediaElement = false;
                 this.formulaire = false
                 this.streamArray = response.data
                 console.log(response.data);
                 connection.session = {
-                    // audio: true,
-                    // video: true,
-                    screen: true,
+                    audio: true,
+                    data: true,
+                    video: true,
+                    //screen: true,
                     oneway: true
                 };
                 connection.socketMessageEvent = 'screen-sharing';
                 connection.sdpConstraints.mandatory = {
-                    OfferToReceiveAudio: false,
-                    OfferToReceiveVideo: false
+                    OfferToReceiveAudio: true,
+                    OfferToReceiveVideo: true
                 }
-                let testid = response.data.id;
-                connection.open(testid);
+                let roomid = response.data.id;
+                this.url = window.location.href + "/" + roomid;
+                this.roomid  =roomid;
+                connection.open(roomid);
                 console.log(connection)
                 this.emitter.emit('charger-streams')
             }).catch(error=>
@@ -98,19 +123,16 @@ export default {
 
             if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 console.log('getUserMedia supported.');
-                navigator.mediaDevices.getUserMedia({audio:true, screen: true, video: true})
-
-                // Success callback
+                navigator.mediaDevices.getUserMedia({audio: true, video:true, screen :true})
                 .then(stream => {
                     this.stream = stream;
-                    
                     const mediaStream = new MediaStream(stream);
                     const video = document.querySelector('video');
                     video.srcObject = mediaStream;
 
-                    const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm"});
+                    const mediaRecorder = new MediaRecorder(stream, {mimeType : "video/webm", audioBitsPerSecond: 12800, videoBitsPerSecond: 200000});
                     this.recorder = mediaRecorder;
-                    
+                    console.log(this.recorder);
                     mediaRecorder.ondataavailable = e => {
                         this.recordedChunks.push(e.data);
                     }
@@ -134,11 +156,13 @@ export default {
 
             // close socket.io connection
             connection.closeSocket();
+
             console.log(this.streamArray['id'])
-            // windows en cas de ragequit
+            
             api.delete('/stream/'+this.streamArray['id']).then(response=>
             {
                 alert('le stream est stop')
+                this.downloadStream();
                 this.$router.push('/');
             }).catch(error=>{
                 alert(error.response.data.message)
@@ -148,110 +172,111 @@ export default {
         {
             this.recorder.stop();
             this.stream.getTracks().forEach(track => { track.stop(); });
-            let blob = new Blob(this.recordedChunks, {type: "video/mpeg"});
+            let blob = new Blob(this.recordedChunks, {type: "video/webm"});
             let url =  URL.createObjectURL(blob);
-            let a = document.createElement("a");
-            document.body.appendChild(a);
-            a.style = "display: none";
-            a.href = url;
-            a.download = this.clipName + '.mpeg';
-            a.click();
-            setTimeout(function() { URL.revokeObjectURL(url); }, 100);
+            console.log(blob);
+            console.log(this.streamArray)
+            console.log(this.streamArray['id'])
+            const data = new FormData()
+            data.append('status',this.streamArray.visibility)
+            data.append('data',blob)
+            data.append('id_stream',this.streamArray['id'])
+            api.post('/video',data
+            ).then(response=>
+            {
+                alert('video envoyé')
+            }).catch(error=>{
+                alert(error.response.data.message)
+            })
         }
     }//method
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
 div.FormLancerStream{
-    border: solid 1px black;
     width: 50%;
+    padding: 1em;
     margin: auto;
     margin-top:50px;
     border-radius: 2%;
-    box-shadow: 0px 0px 30px 0px;
+    box-shadow: 0px 0px 1em 0px;
+    text-align: center;
 
-    h1.title{
-        text-align: center;
-        font-size: 40px;
-        margin-bottom: 40px;
-        margin-top:40px;
-    }
+    form {
+        display: flex; justify-content: center; align-items: center; flex-direction: column;
 
-    div.stream-name{
-        width: 80%;
-        margin: auto;
-        margin-bottom: 20px;
-        input{
-            width: 100%;
-            height: 40px;
+        label {
+            margin-right: .7em;
         }
-    }
-    div.private-stream{
-        width: 80%;
-        margin: auto;
-        margin-bottom: 20px;
-        position: relative;
-        padding: 15px 30px 15px 62px;
-        border: 3px solid #fff;
-        border-radius: 100px;
-        color: #fff;
-        background-color: #6a8494;
-        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
 
-        input[type="checkbox"]{
-            margin-left: 20px;
+        #stream-name {
+            width: 50%;
+            padding: .7em;
+            margin-bottom: 2em;
+
+            height: 3em;
+            margin-top: 20px;
+            border-radius: .7em;
+            border: 1px solid #ccc;
+            padding: .3em;
         }
-    }
 
-    div.ano-stream{
-        width: 80%;
-        margin: auto;
-        margin-bottom: 20px;
-        position: relative;
-        padding: 15px 30px 15px 62px;
-        border: 3px solid #fff;
-        border-radius: 100px;
-        color: #fff;
-        background-color: #6a8494;
-        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
-
-        input[type="checkbox"]{
-            margin-left: 20px;
+        #startStream{
+            border: none;
+            margin-top: 2em;
+            padding: 1em;
+            width: 30%;
+            background-color: rgb(110, 101, 230);
+            color: white;
+            border-radius: .3em;
+            opacity: .9;
         }
-    }
-
-    div.urgency-stream{
-        width: 80%;
-        margin: auto;
-        margin-bottom: 20px;
-        position: relative;
-        padding: 15px 30px 15px 62px;
-        border: 3px solid #fff;
-        border-radius: 100px;
-        color: #fff;
-        background-color: #6a8494;
-        box-shadow: 0 0 20px rgba(0, 0, 0, .2);
-
-        input[type="checkbox"]{
-            margin-left: 20px;
+        #startStream:hover {
+            cursor: pointer;
+            opacity: 1;
+            transition: .3s ease-in;
         }
-    }
 
-    button.startStream{
-        display: block;
-        margin: auto;
-        margin-top: 20px;
-        margin-bottom: 40px;
-        width: 40%;
-        height: 55px;
-        
-        background-color: rgb(110, 101, 230);
-        color: white;
-        border-radius: 10px;
     }
 
 }
+.video-stream {
+    display:block;
+    margin:auto;
+    margin-top:30px;
+    width: 50%;
+}
+
+div.btnStream{
+    margin: auto;
+    width: fit-content;
+    .StopStream{
+        margin: auto;
+        margin-top: 1em;
+        margin-right: 30px;
+        background-color: #ff2828;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 1em;
+        opacity: 0.9;
+    }
+
+    .Download{
+        margin: auto;
+        margin-top: 1em;
+        background-color: rgb(110, 101, 230);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 1em;
+        opacity: 0.9;
+    }
+
+}
+
+
     
 </style>
