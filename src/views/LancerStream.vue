@@ -13,7 +13,7 @@
                     </div>
                     <div>
                         <label for="urgency">Mode urgence</label>
-                        <input v-model="checkbox_urgency" type="checkbox" id="urgency">
+                        <input @click="getPosition" v-model="checkbox_urgency" type="checkbox" id="urgency">
                     </div>
             <button id="startStream" ref="start-button">START</button>
         </form>
@@ -35,6 +35,8 @@
 var connection = new RTCMultiConnection();
 // this line is VERY_important
 connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+let gps = [];
 
 export default {
     data()
@@ -59,23 +61,37 @@ export default {
             this.stopStream();
         }, false);
     },
+    mounted() {
+        var startPos;
+        var geoSuccess = (position) => {
+            startPos = position;
+            let latitude = startPos.coords.latitude;
+            let longitude = startPos.coords.longitude;
+            gps.push(latitude, longitude);
+        };
+        console.log(gps);
+        navigator.geolocation.getCurrentPosition(geoSuccess);
+    },
     methods:
     {
         startStream()
         {
-            let username
+            let username;
             if(this.$store.state.UserCo == false){
                 username = null;
             }else{
                 username = this.$store.state.UserCo.username;
             }
+
             api.post('stream',
             {
                 title:this.title,
                 visibility: this.checkbox_private,
                 anonymous: this.checkbox_anonymous,
                 urgency: this.checkbox_urgency,
-                username: username
+                username: username,
+                latitude: gps[0],
+                longitude: gps[1]
             }).then(response =>
             {
                 connection.autoCreateMediaElement = false;
