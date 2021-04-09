@@ -70,6 +70,10 @@ export default {
     display: none;
   }
 
+  button:hover {
+    cursor: pointer;
+  }
+
 
 }
 </style>

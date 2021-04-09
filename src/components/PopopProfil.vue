@@ -21,7 +21,7 @@
             <a href="">Editer profil</a>
             </router-link>
 
-            <router-link to="">
+            <router-link to="/video">
                 <img src="../assets/icons/video.svg" alt="icons">
                 Mes vidéos
             </router-link>
