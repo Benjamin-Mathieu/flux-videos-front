@@ -231,7 +231,7 @@ div.FormLancerStream{
             border: none;
             margin-top: 2em;
             padding: 1em;
-            width: 30%;
+            width: 40%;
             background-color: rgb(110, 101, 230);
             color: white;
             border-radius: .3em;
