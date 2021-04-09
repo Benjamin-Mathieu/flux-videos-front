@@ -17,7 +17,6 @@
       <router-link to="/stream">Lancer Stream</router-link>
     </button>
     
-    <img v-if="this.$store.state.UserCo" class="icons" src="../assets/icons/notifications_none-white-36dp.svg" alt="notifications"/>
     <button v-if="this.$store.state.token" @click="showSideBarProfile">
       <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil"/>
     </button>
@@ -168,11 +167,10 @@ header {
     border: none;
   }
 
-  button:nth-child(8){
+  button:last-child {
     background-color: transparent;
     border: none;
   }
-
 
 
   height: 80px;
