@@ -1,7 +1,7 @@
 <template>
     <div class="stream">
         <router-link :to="{name:'ViewStream',params:{id:stream.id}}">
-            <img src="https://via.placeholder.com/400x300/09f/fff.png" alt="">
+            <img src="https://via.placeholder.com/350x300/09f/fff.png" alt="">
             <div class="detail-stream">
                 <div class="avatar">
                     <img v-if="stream.anonymous == 0" class="gravatar" :src="'https://avatars.dicebear.com/api/bottts/'+stream.creator.mail+'.svg'" alt="Avatar" width="20px">

@@ -63,11 +63,11 @@ export default {
 
 .inscription-form{
 
-    @media screen and (min-width:450px) and(max-width: 600px) {
+    @media screen and (min-width:320px) and(max-width: 700px) {
         width: 70%;
     }
     
-    width: 30%;
+    width: 50%;
     margin: auto;
     margin-top: 80px;
     box-shadow: 0px 0px 1em 0px;

@@ -40,25 +40,29 @@ export default {
 
   .main {
     width: 90%; margin: 0 auto;
-    @media screen and (min-width:450px) and(max-width: 600px) {
+    @media screen and(max-width: 900px) {
       width: 80%;
     }
+
     h1{
       text-align: center;
     }
+    
     .public-streams {
       display: grid;
       grid-template-columns: auto auto auto;
       grid-gap: 1.5em;
-      @media screen and (min-width:450px) and(max-width: 600px) {
-        grid-template-columns: repeat(3, 1fr);
+      @media screen and(max-width: 900px) {
+        grid-template-columns: auto;
+      }
+      @media screen and (min-width: 901px) and (max-width: 1350px) {
+        grid-template-columns: auto auto;
       }
     }
     .public-streams div {
       display: flex; justify-content: center; align-items: center;
-      @media screen and (min-width:450px) and(max-width: 600px) {
-        grid-column-start: 1;
-        grid-column-end: 4;
+      @media screen and (max-width: 470px) {
+        width: 80%;
       }
     }
 
@@ -66,9 +70,15 @@ export default {
       display: grid;
       grid-template-columns: auto auto;
       grid-gap: 1.5em;
+      @media screen and(max-width: 900px) {
+        grid-template-columns: auto;
+      }
     }
     .urgent-streams div {
       display: flex; justify-content: center; align-items: center;
+      @media screen and (max-width: 470px) {
+        width: 80%;
+      }
     }
   }
   
