@@ -3,7 +3,7 @@
     <div class="votreVideo">
         <h1>Votre vidéo</h1>
         <video class="lavideo" controls></video>
-        <p>Lien de votre vidéo : <a :href="'http://2a9e322e8276.ngrok.io/videos/'+this.video.name+'.webm'">Link</a></p>
+        <p>Lien de votre vidéo : <a @click="linkVideo" href="">Lien</a></p>
     </div>
     
 </template>
@@ -13,6 +13,7 @@ export default {
     data() {
         return {
             video : '',
+            urlVideo: '',
         }
     },
     mounted() {
@@ -21,9 +22,9 @@ export default {
 
             if(video.id == this.$route.params.id){
                 this.video = video;
-                let link = "http://2a9e322e8276.ngrok.io/videos/"+video.name+".webm";
+                this.urlVideo = "http://22d562677bbc.ngrok.io/videos/"+video.name+".webm";
                 let lavideo = document.querySelector(".lavideo");
-                lavideo.src = link
+                lavideo.src = this.urlVideo;
             }
             
         });
@@ -31,7 +32,7 @@ export default {
     },
     methods: {
         linkVideo(){
-            window.open("http://2a9e322e8276.ngrok.io/videos/"+this.video.name+".webm")
+            window.open(this.urlVideo)
         }
     },
 }
