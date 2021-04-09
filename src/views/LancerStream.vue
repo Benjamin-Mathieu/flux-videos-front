@@ -275,6 +275,21 @@ div.btnStream{
 
 }
 
+button{
+            margin-top: 1em;
+            background-color: rgb(110, 101, 230);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 1em;
+            opacity: 0.9;
+        }
+        button:hover {
+            cursor: pointer;
+            opacity: 1;
+            transition: 0.3s ease-in;
+        }
+
 
     
 </style>

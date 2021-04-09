@@ -8,8 +8,8 @@
     <Sidebar  :isOpen="this.isOpen"/>
     
     <form action="" class="search">
-      <input type="text" placeholder="Rechercher" />
-      <img class="icons" src="../assets/icons/search-black-36dp.svg" alt="search"/>
+      <input class="search-bar" type="text" placeholder="Rechercher" />
+      <img class="icons search-icon" src="../assets/icons/search-black-36dp.svg" alt="search"/>
     </form>
 
     <button @click="launchUrgencyStream" class="stream-buttons">URGENCE</button>
@@ -127,6 +127,12 @@ export default {
 </script>
 
 <style lang="scss">
+
+@media screen and (min-width:320px) and(max-width: 900px) {
+  .search-bar, .search-icon{
+          display: none;
+      } 
+}
 header {
   
   button:first-of-type{

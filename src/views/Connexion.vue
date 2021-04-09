@@ -151,7 +151,7 @@ div.connexionForm{
         }
     }
 }
-@media screen and (min-width:450px) and(max-width: 600px) {
+@media screen and (min-width:320px) and(max-width: 900px) {
     div.connexionForm{
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -169,7 +169,8 @@ div.connexionForm{
             margin: auto;
             margin-top: 10%;
         }
-    }       
+    }  
+    
 }
     
 </style>

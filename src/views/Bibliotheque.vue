@@ -1,6 +1,6 @@
 <template>
   <div>tokokok</div>
-  <video class="video" src="" controls></video>
+  <video  class="video" src="" controls></video>
 </template>
 
 <script>
@@ -23,3 +23,11 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+  @media screen and (min-width:320px) and(max-width: 640px) {
+    video {
+      width: 300px;
+    }
+  }
+</style>
