@@ -48,7 +48,25 @@ const routes = [
     name: "connexion",
     component: () =>
       import("../views/Connexion.vue")
-  }
+  },
+  {
+    path: "/profile/:id",
+    name: "profile",
+    component: () =>
+      import("../views/UserProfile.vue")
+  },
+  {
+    path: "/video/:id",
+    name: "video",
+    component: () =>
+      import("../views/Video.vue")
+  },
+  {
+    path: "/Edit-profile",
+    name: "edit-profile",
+    component: () =>
+      import("../views/EditProfile.vue")
+  },
 ];
 
 const router = createRouter({

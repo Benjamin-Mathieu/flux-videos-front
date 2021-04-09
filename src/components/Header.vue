@@ -1,64 +1,168 @@
 <template>
   <header>
-    <button @click="toggleSidebar">
+
+    <button @click="showSideBar">
       <img class="icons" src="../assets/icons/menu-white-36dp.svg" alt="menu" />
     </button>
+    <br>
+    <Sidebar  :isOpen="this.isOpen"/>
+    
     <form action="" class="search">
-      <input type="text" placeholder="Rechercher" />
-      <img
-        class="icons"
-        src="../assets/icons/search-black-36dp.svg"
-        alt="search"
-      />
+      <input class="search-bar" type="text" placeholder="Rechercher" />
+      <img class="icons search-icon" src="../assets/icons/search-black-36dp.svg" alt="search"/>
     </form>
-    <button class="stream-buttons">URGENCE</button>
-    <button class="stream-buttons">
+
+    <button @click="launchUrgencyStream" class="stream-buttons">URGENCE</button>
+    <button v-if="this.$store.state.UserCo" class="stream-buttons">
       <router-link to="/stream">Lancer Stream</router-link>
     </button>
-    <!--<button class="stream-buttons">
-      <router-link to="/stream">Regarder Stream</router-link>
-    </button>-->
-    <img
-      class="icons"
-      src="../assets/icons/notifications_none-white-36dp.svg"
-      alt="notifications"
-    />
-    <button  @click="toggleSidebarProfil">
+    
+    <button v-if="this.$store.state.token" @click="showSideBarProfile">
       <img class="icons" src="../assets/icons/account_circle-white-36dp.svg" alt="profil"/>
     </button>
+
+    <button v-else @click="Connexion" style="background-color: transparent; border: none;">
+      <img class="icons" src="../assets/icons/log-out.svg" alt="profil"/>
+    </button>
+    <SidebarProfil :isOpenProfil="this.isOpenProfil"/>
     
   </header>
 </template>
 
 <script>
+import Sidebar from "@/components/Sidebar.vue";
+import SidebarProfil from "@/components/PopopProfil.vue";
+
+var connection = new RTCMultiConnection();
+connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+let gps = [];
+
 export default {
+  components: {
+    Sidebar,
+    SidebarProfil
+  },
   data() {
     return {
-      sidebarOpen: true,
-      sidebarProfil: true
+      sidebarOpen: false,
+      sidebarProfil: true,
+      isOpen: false,
+      isOpenProfil: false,
+      streamArray: [],
+      stream : "",
+      recorder: "",
+      recordedChunks : [],
+      streamArray : [],
+      roomid : "",
+      url: "",
     };
   },
 
+  mounted() {
+    var startPos;
+    var geoSuccess = (position) => {
+        startPos = position;
+        let latitude = startPos.coords.latitude;
+        let longitude = startPos.coords.longitude;
+        gps.push(latitude, longitude);
+    };
+    console.log(gps);
+    navigator.geolocation.getCurrentPosition(geoSuccess);
+  },
+
   methods: {
-    toggleSidebar() {
-      this.sidebarOpen = !this.sidebarOpen;
-      this.emitter.emit("toggle-sidebar", this.sidebarOpen);
+    Connexion(){
+      this.$router.push('/connexion');
+    },
+    showSideBar(){     
+      this.isOpen = !this.isOpen;
+      console.log(this.isOpen)
+
+    },
+    showSideBarProfile(){     
+      this.isOpenProfil = !this.isOpenProfil;
+      //console.log(this.isOpenProfil)
     },
 
-    toggleSidebarProfil() {
-      this.sidebarProfil = !this.sidebarProfil;
-      this.emitter.emit("toggle-sidebarProfil", this.sidebarProfil);
+    launchUrgencyStream() {
+      let username;
+      if(this.$store.state.UserCo == false){
+          username = null;
+      }else{
+          username = this.$store.state.UserCo.username;
+      }
+
+      api.post('stream',
+      {
+          title: "Urgent",
+          visibility: true,
+          anonymous: false,
+          urgency: true,
+          username: username,
+          latitude: gps[0],
+          longitude: gps[1]
+      }).then(response =>
+      {
+          connection.autoCreateMediaElement = false;
+          this.formulaire = false
+          this.streamArray = response.data
+          console.log(response.data);
+          connection.session = {
+              audio: true,
+              data: true,
+              video: true,
+              //screen: true,
+              oneway: true
+          };
+          connection.socketMessageEvent = 'screen-sharing';
+          connection.sdpConstraints.mandatory = {
+              OfferToReceiveAudio: true,
+              OfferToReceiveVideo: true
+          }
+          let roomid = response.data.id;
+          this.url = window.location.href + "/" + roomid;
+          this.roomid  =roomid;
+          connection.open(roomid);
+          console.log(connection)
+
+          window.open(window.location + "stream/" + this.roomid); //ouvre le stream dans le lien
+
+          this.emitter.emit('charger-streams')
+      }).catch(error=>
+      {
+          alert(error.response.data.message)
+      })
+      
+
     }
   }
 };
 </script>
 
 <style lang="scss">
+
+@media screen and (min-width:320px) and(max-width: 900px) {
+  .search-bar, .search-icon{
+          display: none;
+      } 
+}
 header {
+  
+  button:first-of-type{
+    background-color: transparent;
+    border: none;
+  }
+
+  button:last-child {
+    background-color: transparent;
+    border: none;
+  }
+
+
   height: 80px;
   background-color: #474747;
   display: flex; justify-content: center; align-items: center;
-  margin-bottom: 3em;
   .icons {
     height: 30px;
     width: 30px;
@@ -71,6 +175,10 @@ header {
     border-radius: 0.3em;
     border: none;
     margin: 1em;
+
+    a{
+      color: whitesmoke;
+    }
   }
 
   form.search {

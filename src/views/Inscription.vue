@@ -1,34 +1,16 @@
 <template>
-    <div>
-        <div class="content">
-
-            <h1>Inscription</h1>
-            <form @submit.prevent="creerCompte">
-            <div>
+    <div class="inscription-form">
+        <h1>Inscription</h1>
+        <form @submit.prevent="creerCompte">
                 <input v-model="name" required type="text" placeholder="Nom">
-            </div>
-            <div>
                 <input v-model="firstname" required type="text" placeholder="Prénom">
-            </div>
-            <div>
                 <input v-model="username" required type="text" placeholder="Pseudo">
-            </div>
-            <div>
                 <input v-model="mail" required type="email" placeholder="Mail">
-            </div>
-            <div>
                 <input v-model="password" required type="password" placeholder="Mot de passe">
-            </div>
-            <div>
-                <input v-model="confirmPassword" required type="password" placeholder="Confirmer le mot de passe">
-            </div>
-            <div>
-                <button class="button">Créer mon compte</button>
-            </div>
-            </form>
-
-        </div>
-
+                <input v-model="confirmPassword" required type="password" placeholder="Confirmer le mot de passe" ref="password">
+                <span v-if="password != confirmPassword">Passwords don't match</span>
+                <button>Créer mon compte</button>
+        </form> 
     </div>
 </template>
 
@@ -70,7 +52,7 @@ export default {
             }
             else
             {
-                alert('Erreur de confirmation de mot de passe');
+                this.$refs.passwords.classList.add("wrong-passwords");
             }
         }
     }
@@ -79,31 +61,57 @@ export default {
 
 <style lang="scss">
 
-div.content{
-    border: 1px solid black;
-    width: 30%;
+.inscription-form{
+
+    @media screen and (min-width:320px) and(max-width: 700px) {
+        width: 70%;
+    }
+    
+    width: 50%;
     margin: auto;
     margin-top: 80px;
-    box-shadow: 0px 0px 50px 0px;
-    
+    box-shadow: 0px 0px 1em 0px;
+    border-radius: .7em;
+    padding: 1em;
+
+    form {
+        display: flex; justify-content: center; align-items: center; flex-direction: column;
+
+        span {
+            color: #ff0033;
+            font-size: small;
+        }
+
+        input{
+            width: 90%;
+            height: 40px;
+            margin: .7em 0;
+            border-radius: .3em;
+            border: 1px solid #CCC;
+            padding: .3em;
+        }   
+        button{
+            width: 40%;
+            height: 50px;
+            color: white;
+            background-color: rgb(110, 101, 230);
+            border: none;
+            border-radius: .3em;
+            opacity: 0.9;
+        }
+        button:hover {
+            cursor: pointer;
+            opacity: 1;
+            transition: .3s ease-in;
+        }
+
+        .wrong-passwords {
+            border: 1px solid red;
+        }
+    }
 
     h1{
         text-align: center;
-    }
-    input{
-        width: 80%;
-        height: 40px;
-        margin-top: 30px;
-        margin-left: 10%
-    }
-    button{
-        width: 40%;
-        height: 50px;
-        color: white;
-        background-color: rgb(110, 101, 230);
-        margin-top: 30px;
-        margin-left: 30%;
-        margin-bottom: 30px;
     }
 }
     

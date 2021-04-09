@@ -9,7 +9,7 @@
 
         <div class="form-content">
 
-            <form @submit.prevent="setConnexion">
+            <form @submit.prevent="setConnexion()">
                 <input v-model="login" type="text" name="txt_login" required placeholder="Saisir votre login">
                 <br>
                 <input v-model="password" type="password" name="txt_login" required placeholder="Saisir votre mot de passe">
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import jwt_decode from "jwt-decode";
 export default {
     data() {
         return {
@@ -51,16 +52,18 @@ export default {
                 ).then(response=>
                 {
                     console.log(response.data); //contenu des data
-                    //this.$router.push('/se-connecter');
+                    let decoded = jwt_decode(response.data);
+                    this.$store.commit('setToken', response.data);
+                    this.$store.commit('setUserCo', decoded);
+                    console.log(decoded);
+                    this.$router.push('/');
                 }).catch(error=>
                 {
                     alert("Veuillez saisir le bon login et password");
                 })
             }
-
         }
     },
-
 }
 </script>
 
@@ -69,15 +72,17 @@ export default {
 
 div.connexionForm{
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(10, 1fr);
     width: 80%;
     margin: auto;
-    margin-top: 10% ;
-    
+    margin-top: 10%;
 
     & div.content{
         width: 70%;
         margin: auto;
+        grid-column-start: 1;
+        grid-column-end: 5;
+        
         img{
             display: block;
             margin: auto;
@@ -99,30 +104,42 @@ div.connexionForm{
 
     & div.form-content{
         width: 70%;
-        margin: auto;
-        border: 1px solid black;
         border-radius: 10px;
         height: auto;
-        box-shadow: 0px 0px 50px 0px;
-
+        box-shadow: 0px 0px 1em 0px;
+        border: none;
+        display: flex; justify-content: center; flex-direction: column; align-items: center;
+        grid-column-start: 6;
+        grid-column-end: 11;
         input{
-            width: 70%;
-            height: 45px;
+            height: 3em;
             margin-top: 20px;
-            margin-left: 15%;
+            border-radius: .7em;
+            width: 80%;
+            border: 1px solid #ccc;
+            padding: .3em;
         }
         input:first-of-type{
             margin-top: 30px;
         }
 
+        form {
+            text-align: center; width: 100%;
+        }
+
         button{
-            margin-top: 20px;
-            width: 50%;
-            height: 55px;
-            margin-left: 25%;
+            margin-top: 1em;
             background-color: rgb(110, 101, 230);
             color: white;
+            border: none;
             border-radius: 10px;
+            padding: 1em;
+            opacity: 0.9;
+        }
+        button:hover {
+            cursor: pointer;
+            opacity: 1;
+            transition: 0.3s ease-in;
         }
 
         p{
@@ -133,6 +150,27 @@ div.connexionForm{
             margin-bottom: 30px;
         }
     }
+}
+@media screen and (min-width:320px) and(max-width: 900px) {
+    div.connexionForm{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        width: 80%;
+        margin: auto;
+        //margin-top: 10%;
+
+        & div.content{
+            grid-column-start: 1;
+            grid-column-end: 4;
+        }
+        & div.form-content{
+            grid-column-start: 1;
+            grid-column-end: 4;
+            margin: auto;
+            margin-top: 10%;
+        }
+    }  
+    
 }
     
 </style>
