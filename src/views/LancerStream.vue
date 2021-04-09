@@ -111,7 +111,6 @@ export default {
                     OfferToReceiveVideo: true
                 }
                 let roomid = response.data.id;
-                console.log(this.checkbox_private + "inchalla")
                 if(this.checkbox_private == true){
                     this.url = window.location.href + "/" + roomid;
                 }

@@ -20,7 +20,6 @@
             </div>
         </div>
         <div v-if="this.stream.urgency != 0" id="map"></div>
-        <button @click="test">OK</button>
     </div>
 </template>
 
@@ -186,10 +185,6 @@ export default {
                 background-color: #CCC; border-radius: 50%; height: 50px; width: 50px;
                 margin-right: 1em;
                 z-index: 1;
-            }
-            button {
-                background-color: transparent;
-                border: none;
             }
             display: flex; justify-content: space-between;
             margin: auto;
