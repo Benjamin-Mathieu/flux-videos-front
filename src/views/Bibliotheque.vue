@@ -47,14 +47,11 @@ export default {
 </script>
 
 <style lang="scss">
-<<<<<<< HEAD
   @media screen and (min-width:320px) and(max-width: 640px) {
     video {
       width: 300px;
     }
   }
-</style>
-=======
 
 div.bibli{
   h1{
@@ -75,4 +72,3 @@ div.bibli{
 }
   
 </style>
->>>>>>> 0c0b090c4c4397aa276cf008a2cc8f9d4095038f
